@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ইসলাম শিক্ষা — স্টাডি জোন</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--acc:#3ddc97;--ink:#06231a;--good:#2fcf8a;--bad:#ff6b6b}
+[data-theme=light]{--bg1:#eaf1fb;--bg2:#fdfeff;--card:#ffffff;--card2:#f1f5fb;--tx:#16203a;--mu:#5d6b8a;--bd:rgba(20,30,60,.12);--pop:#ffffff;--glass:rgba(255,255,255,.62);--shadow:0 8px 28px rgba(40,60,110,.13)}
+[data-theme=dark]{--bg1:#0a0f1f;--bg2:#161d3a;--card:#1a2140;--card2:#222a4d;--tx:#eef2ff;--mu:#9aa6c7;--bd:rgba(255,255,255,.12);--pop:#1b2342;--glass:rgba(18,24,46,.6);--shadow:0 10px 34px rgba(0,0,0,.35)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Hind Siliguri','Noto Sans Bengali','Kalpurush',system-ui,sans-serif;background:linear-gradient(135deg,var(--bg1),var(--bg2));background-attachment:fixed;color:var(--tx);min-height:100vh;overflow-x:hidden;font-size:16px;line-height:1.6}
+button{font-family:inherit;cursor:pointer;border:0;color:inherit}
+.blob{position:fixed;border-radius:50%;filter:blur(70px);opacity:.22;z-index:0;pointer-events:none;background:var(--acc);animation:float 14s ease-in-out infinite}
+.blob.b1{width:340px;height:340px;top:-90px;left:-80px}
+.blob.b2{width:300px;height:300px;bottom:-80px;right:-60px;animation-delay:-6s;opacity:.16}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,30px) scale(1.15)}}
+#app{position:relative;z-index:1;transition:opacity .3s,transform .3s}
+#app.out{opacity:0;transform:scale(.96) translateY(10px)}
+.wrap{max-width:900px;margin:0 auto;padding:14px 14px 90px}
+.page{animation:fadeUp .45s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.88);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}15%,55%{transform:translateX(-10px)}35%,75%{transform:translateX(10px)}}
+.shake{animation:shake .45s}
+
+/* avatar */
+.av{position:relative;display:inline-grid;place-items:center;width:var(--s);height:var(--s);border-radius:50%;border:4px solid var(--ring,var(--acc));background:linear-gradient(135deg,var(--ring,var(--acc)),#222);overflow:hidden;flex:none;box-shadow:0 8px 24px color-mix(in srgb,var(--ring,var(--acc)) 40%,transparent)}
+.av b{color:#fff;font-size:calc(var(--s)*.42)}
+.av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%}
+
+/* icon buttons */
+.icb{width:42px;height:42px;border-radius:50%;display:inline-grid;place-items:center;flex:none;color:#fff;background:linear-gradient(135deg,var(--c),color-mix(in srgb,var(--c) 65%,#fff));box-shadow:0 6px 14px color-mix(in srgb,var(--c) 45%,transparent);transition:transform .25s cubic-bezier(.2,.9,.3,1.5),box-shadow .25s}
+.icb:hover{transform:translateY(-3px) rotate(-8deg) scale(1.06)}
+.icb:active{transform:scale(.9)}
+.icb.sm{width:34px;height:34px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-weight:700;font-size:13.5px;color:#fff;background:linear-gradient(135deg,var(--c),color-mix(in srgb,var(--c) 65%,#fff));box-shadow:0 6px 14px color-mix(in srgb,var(--c) 40%,transparent);transition:.2s}
+.chip:hover{transform:translateY(-2px)}
+.chip:active{transform:scale(.95)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+.tl,.tr{display:flex;align-items:center;gap:8px}
+.pill{background:var(--card);border:1px solid var(--bd);border-radius:999px;padding:5px 14px 5px 5px;display:inline-flex;align-items:center;gap:8px;font-weight:600;box-shadow:var(--shadow)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:9px 20px;border-radius:999px;font-weight:700;font-size:14px;background:linear-gradient(135deg,var(--acc),color-mix(in srgb,var(--acc) 60%,#fff));color:var(--ink);box-shadow:0 6px 16px color-mix(in srgb,var(--acc) 38%,transparent);transition:transform .2s,box-shadow .2s,opacity .2s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:scale(.95)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn.sm{padding:7px 14px;font-size:13px}
+.btn.lg{padding:12px 34px;font-size:16px}
+.savebar{position:sticky;bottom:12px;z-index:50;text-align:center;margin-top:14px;padding:10px;border-radius:22px;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.savebar .btn{width:100%}
+.nocloud{color:#b45309;font-size:12.5px;font-weight:600;margin-bottom:8px}
+.btn.red{background:linear-gradient(135deg,#ff5f5f,#ff8e8e);color:#fff;box-shadow:0 6px 16px rgba(255,95,95,.4)}
+.btn.ghost{background:var(--card2);color:var(--tx);box-shadow:none;border:1px solid var(--bd)}
+.btn.blue{background:linear-gradient(135deg,#3b82f6,#74b0ff);color:#fff;box-shadow:0 6px 16px rgba(59,130,246,.4)}
+.btn.yel{background:linear-gradient(135deg,#ffb020,#ffd966);color:#3a2800;box-shadow:0 6px 16px rgba(255,176,32,.4)}
+.btns{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:nowrap;margin-top:14px}
+.fab{position:fixed;right:18px;bottom:18px;z-index:800;padding:11px 20px;font-size:15px;box-shadow:0 10px 26px color-mix(in srgb,var(--acc) 55%,transparent);animation:pop .4s both}
+
+/* modal */
+#modal-root{position:fixed;inset:0;z-index:900;pointer-events:none}
+.backdrop{position:absolute;inset:0;background:rgba(10,14,28,.5);display:flex;align-items:center;justify-content:center;padding:16px;pointer-events:auto;animation:fadeIn .25s both;overflow-y:auto}
+.backdrop>.pop-box{margin:auto;flex:0 0 auto}
+.backdrop.wide>.pop-box{width:calc(100vw - 32px);max-width:none}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.pop-box{width:min(400px,calc(100vw - 32px));border-radius:28px;padding:26px 22px 22px;text-align:center;position:relative;animation:pop .35s cubic-bezier(.2,.9,.3,1.3) both}
+.pop-box{background:#fff;color:#16203a;--mu:#5d6b8a;--card2:#f1f5fb;--bd:rgba(20,30,60,.12);box-shadow:0 24px 60px rgba(0,0,0,.28)}
+.xb{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:var(--card2);display:grid;place-items:center;color:var(--mu);transition:.2s}
+.xb:hover{background:var(--bad);color:#fff;transform:rotate(90deg)}
+.pop-box h2{margin:12px 0 4px;font-size:22px}
+.pop-box h3{margin:8px 0 0;font-size:18px}
+.pw{display:flex;align-items:center;gap:8px;margin:18px 0 6px;height:64px;padding:0 9px 0 18px;border:3px solid var(--acc);border-radius:20px;background:var(--card2);box-shadow:0 0 0 5px color-mix(in srgb,var(--acc) 16%,transparent);transition:.2s}
+.pw input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--tx);font-size:30px;letter-spacing:5px;font-family:inherit;font-weight:600;padding:0}
+.pw input::placeholder{font-size:18px;letter-spacing:0;font-weight:500;color:var(--mu)}
+.eye{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none;background:linear-gradient(135deg,var(--acc),color-mix(in srgb,var(--acc) 60%,#fff));color:var(--ink);box-shadow:0 5px 12px color-mix(in srgb,var(--acc) 45%,transparent);transition:.2s}
+.eye:hover{transform:scale(1.1) rotate(-6deg)}
+.err{min-height:24px;color:var(--bad);font-weight:700;font-size:15px;margin-bottom:6px}
+.err.ok{color:var(--good)}
+
+/* login */
+.login{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:30px 14px 24px}
+.ttl{transform:rotate(-4deg);text-align:center;margin-top:10px}
+.para{display:inline-block;transform:skewX(-14deg);padding:10px 34px;background:linear-gradient(135deg,#ff9f43,#ffc266);box-shadow:10px 10px 0 rgba(255,159,67,.25),0 14px 28px rgba(255,159,67,.35)}
+.para span{display:block;transform:skewX(14deg);font-weight:700;color:#fff;font-size:clamp(28px,8vw,42px);line-height:1.3;text-shadow:0 2px 6px rgba(0,0,0,.18)}
+.para.sm{margin-top:14px;padding:6px 22px;background:linear-gradient(135deg,#3b82f6,#74b0ff);box-shadow:7px 7px 0 rgba(59,130,246,.22),0 10px 22px rgba(59,130,246,.3)}
+.para.sm span{font-size:clamp(14px,3.8vw,18px);text-shadow:none}
+.mid{flex:1;display:flex;align-items:center;justify-content:center;width:100%}
+.tri{--sz:clamp(128px,35vw,190px);display:flex;flex-direction:column;align-items:center}
+.tri .r2{display:flex;gap:clamp(20px,6vw,44px);margin-top:clamp(18px,4vw,30px)}
+.pick{background:none;padding:0;border-radius:50%;animation:pop .6s both;transition:transform .25s}
+.pick .av{border-width:5px}
+.pick:hover{transform:scale(1.05)}
+.pick:active{transform:scale(.96)}
+.r2 .pick:nth-child(1){animation-delay:.15s}.r2 .pick:nth-child(2){animation-delay:.3s}
+
+/* banner */
+.banner{position:relative;border-radius:34px;padding:26px 20px 24px;overflow:hidden;color:#fff;background:linear-gradient(120deg,color-mix(in srgb,var(--acc) 85%,#000),#1d2a5c 60%,#3b1d5c);box-shadow:var(--shadow);text-align:center}
+.banner::before,.banner::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.1)}
+.banner::before{width:220px;height:220px;top:-90px;right:-50px}
+.banner::after{width:160px;height:160px;bottom:-70px;left:-30px}
+.banner>*{position:relative;z-index:1}
+.stack{display:flex;justify-content:center;margin-bottom:8px}
+.stack .av{margin-left:-18px;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.stack .av:first-child{margin-left:0}
+.banner h1{margin:4px 0 2px;font-size:clamp(20px,4.8vw,28px)}
+.banner p{margin:0 0 14px;opacity:.85;font-size:15px}
+.lbbtn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#ffd43b,#ff9f43);color:#3a2300;padding:10px 22px;border-radius:999px;font-weight:700;font-size:15px;box-shadow:0 8px 20px rgba(0,0,0,.25);transition:.2s}
+.lbbtn:hover{transform:translateY(-3px) scale(1.04)}
+.picker{margin:22px 0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.big{padding:20px 10px;border-radius:26px;font-size:21px;font-weight:700;background:var(--card);border:2px solid var(--bd);color:var(--tx);transition:.25s;box-shadow:var(--shadow)}
+.big:hover{transform:translateY(-4px);border-color:var(--acc)}
+.big.on{background:linear-gradient(135deg,var(--acc),color-mix(in srgb,var(--acc) 55%,#fff));color:var(--ink);border-color:transparent}
+.sub{margin-top:14px}
+.sub .big{padding:13px;font-size:18px;border-radius:22px}
+.pop{animation:pop .35s both}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--bd);border-radius:28px;padding:18px;margin-bottom:18px;box-shadow:var(--shadow);animation:fadeUp .5s both}
+.num{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--acc);color:var(--ink);font-weight:700;font-size:16px;flex:none}
+.num.sm{width:28px;height:28px;font-size:14px}
+.stim{background:var(--card2);border:1px dashed color-mix(in srgb,var(--acc) 60%,transparent);border-radius:20px;padding:14px 16px;margin:12px 0 14px}
+.stim.passage{border-style:solid;border-left:5px solid var(--acc)}
+.sh{display:flex;gap:10px;align-items:center;margin-bottom:4px}
+.sh h3{margin:0;font-size:18px}
+.qa{padding:12px 0;border-top:1px solid var(--bd)}
+.qr{display:flex;gap:10px;align-items:flex-start}
+.qr .q{flex:1;font-weight:700}
+.mk{color:var(--mu);font-size:13px;font-weight:600;white-space:nowrap;margin-top:3px}
+.abtn{display:flex;justify-content:flex-end;margin-top:8px}
+.abtn button{padding:6px 18px;border-radius:999px;font-weight:700;font-size:13.5px;background:linear-gradient(135deg,#ff9f43,#ffd43b);color:#3a2300;box-shadow:0 5px 14px rgba(255,159,67,.4);transition:.2s}
+.abtn button:hover{transform:translateY(-2px)}
+.abtn button.open{background:linear-gradient(135deg,#3b82f6,#74b0ff);color:#fff}
+.ans{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease}
+.ans.open{grid-template-rows:1fr}
+.ans>div{overflow:hidden}
+.ansin{margin-top:10px;padding:12px 14px;border-radius:18px;background:color-mix(in srgb,var(--acc) 12%,transparent);border-left:4px solid var(--acc);font-size:14.5px}
+.ansin p{margin:0 0 7px}.ansin p:last-child{margin:0}
+.ansin strong{color:color-mix(in srgb,var(--acc) 70%,var(--tx))}
+.tbl{display:grid;grid-template-columns:1fr 1fr;border:2px solid color-mix(in srgb,var(--acc) 60%,transparent);border-radius:20px;overflow:hidden;margin:12px 0}
+.tbl>div{padding:12px 14px}
+.tbl .th{background:var(--acc);color:var(--ink);font-weight:700;text-align:center;font-size:18px}
+.tbl .td+.td,.tbl .th+.th{border-left:2px solid color-mix(in srgb,var(--acc) 60%,transparent)}
+.secH{font-size:20px;font-weight:700;margin:6px 4px 14px}
+
+/* mcq */
+.mq{display:flex;gap:10px;align-items:flex-start}
+.mq .qt{font-weight:700;font-size:17px;flex:1}
+.mcard{scroll-margin-top:90px;transition:background .3s,border-color .3s,box-shadow .3s}
+.mcard.miss{border:2px solid var(--bad);box-shadow:0 0 0 4px rgba(255,107,107,.15)}
+.mcard.cardbad{background:color-mix(in srgb,var(--bad) 13%,var(--card));border-color:color-mix(in srgb,var(--bad) 45%,transparent)}
+.opts{display:grid;gap:9px;margin-top:12px}
+.opts.grid{grid-template-columns:1fr 1fr}
+.opts.list{grid-template-columns:1fr}
+.opt{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:16px;border:1.5px solid var(--bd);background:var(--card2);text-align:left;transition:.2s;font-size:15px;color:var(--tx);min-width:0}
+.opt .ot{flex:1;overflow-wrap:anywhere}
+.ol{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;border:2px solid var(--acc);font-weight:700;font-size:14px;flex:none;transition:.2s}
+button.opt:hover{border-color:var(--acc)}
+.opt.sel{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 22%,transparent)}
+.opt.sel .ol{background:var(--acc);color:var(--ink)}
+.opt.good{border-color:var(--good);background:color-mix(in srgb,var(--good) 26%,transparent)}
+.opt.good .ol{background:var(--good);border-color:var(--good);color:#06231a}
+.opt.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 26%,transparent)}
+.opt.bad .ol{background:var(--bad);border-color:var(--bad);color:#fff}
+.sym{font-weight:700;font-size:18px}
+.good .sym{color:var(--good)}.bad .sym{color:var(--bad)}
+
+/* exam */
+.ebar{position:fixed;top:10px;left:50%;transform:translateX(-50%);width:min(880px,calc(100% - 20px));z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:7px 12px;border-radius:999px;background:var(--glass);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);border:1px solid var(--bd);box-shadow:var(--shadow)}
+.ebar .who{display:flex;align-items:center;gap:10px;font-weight:700}
+.clock{font-size:21px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--acc);display:flex;align-items:center;gap:6px}
+.exwrap{padding-top:78px;padding-bottom:110px}
+.loader{min-height:100vh;display:grid;place-items:center;text-align:center;padding:20px}
+.papers{position:relative;width:240px;height:200px;margin:0 auto 18px}
+.paper{position:absolute;left:50%;top:6px;width:128px;height:168px;margin-left:-64px;background:#fff;border-radius:20px;box-shadow:0 12px 30px rgba(30,40,80,.25);padding:26px 16px 0;border-top:12px solid var(--pc);animation:shuf 1.5s ease-in-out infinite}
+.paper:nth-child(1){--pc:#ff9f43;animation-delay:0s}
+.paper:nth-child(2){--pc:#3b82f6;animation-delay:-.5s}
+.paper:nth-child(3){--pc:#ffc933;animation-delay:-1s}
+.paper i{display:block;height:8px;border-radius:6px;background:#e3e8f2;margin-bottom:11px}
+.paper i:nth-child(2){width:80%}.paper i:nth-child(3){width:60%}.paper i:nth-child(4){width:90%}
+@keyframes shuf{0%,100%{transform:translateX(66px) rotate(10deg) scale(.88);z-index:1}33%{transform:translateX(0) rotate(0) scale(1);z-index:3}66%{transform:translateX(-66px) rotate(-10deg) scale(.88);z-index:2}}
+.loader h2{margin:0 0 16px;font-size:20px}
+.pbox{position:relative;width:min(300px,86vw);height:46px;margin:0 auto;border-radius:16px;background:var(--card2);border:1px solid var(--bd);overflow:hidden;box-shadow:inset 0 2px 6px rgba(0,0,0,.06)}
+.pfill{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,var(--acc),color-mix(in srgb,var(--acc) 55%,#fff))}
+.pbox .shine{position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.6) 50%,transparent 70%);transform:translateX(-100%);animation:sweep 1s linear infinite}
+@keyframes sweep{to{transform:translateX(100%)}}
+.pbox span{position:absolute;inset:0;display:grid;place-items:center;font-weight:700;font-size:15px;color:var(--tx)}
+
+/* result */
+.scoreBox{width:min(250px,84%);height:150px;margin:4px auto 12px;border-radius:22px;border:3px dotted var(--acc);background:color-mix(in srgb,var(--acc) 12%,transparent);display:grid;place-items:center;text-align:center;animation:pop .5s both}
+.scoreBox b{display:block;font-size:58px;line-height:1;color:var(--acc);filter:brightness(.88)}
+.scoreBox b small{font-size:26px;color:var(--mu);font-weight:600}
+.scoreBox span{font-size:14px;color:var(--mu);font-weight:600;display:block;margin-top:8px}
+.urow{display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 14px;font-weight:700;font-size:24px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
+.stat{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:10px;text-align:center}
+.stat b{display:block;font-size:22px}
+.stat span{color:var(--mu);font-size:13.5px}
+.stat.g b{color:var(--good)}.stat.r b{color:var(--bad)}
+.stat.full{grid-column:1/-1}
+.vr{display:flex;flex-direction:column;align-items:center;gap:10px;margin:16px 0}
+.vr .two{display:flex;gap:10px}
+.chips{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.cg,.cr{padding:6px 14px;border-radius:999px;font-weight:700;font-size:14px}
+.cg{background:color-mix(in srgb,var(--good) 22%,transparent);color:var(--good)}
+.cr{background:color-mix(in srgb,var(--bad) 20%,transparent);color:var(--bad)}
+.tbig{font-size:38px;font-weight:700;color:var(--acc);font-variant-numeric:tabular-nums;line-height:1.2;margin-top:6px}
+.tbig small{display:block;font-size:13px;color:var(--mu);font-weight:600}
+.empty{text-align:center;color:var(--mu);padding:30px 10px}
+
+/* leaderboard */
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.col{background:var(--card);border:2px solid var(--ring);border-radius:30px;padding:16px 8px;text-align:center;cursor:pointer;transition:.25s;box-shadow:var(--shadow);position:relative;animation:fadeUp .5s both}
+.col:hover{transform:translateY(-6px)}
+.col .rk{position:absolute;top:8px;left:12px;font-size:20px}
+.col .nm{font-weight:700;margin-top:8px}
+.col .ex{font-size:13px;font-weight:600;color:var(--ring);margin-bottom:10px}
+.sc{display:flex;border-radius:999px;overflow:hidden;font-weight:800;margin:0 auto;max-width:170px;font-size:22px}
+.sc span{flex:1;padding:9px 0;text-align:center;min-width:56px}
+.sc .g{background:color-mix(in srgb,var(--good) 30%,transparent);color:var(--good)}
+.sc .r{background:color-mix(in srgb,var(--bad) 28%,transparent);color:var(--bad)}
+.sclab{font-size:12px;color:var(--mu);margin-top:6px}
+.hbtn{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border-radius:22px;background:var(--card);border:1px solid var(--bd);margin-bottom:10px;text-align:left;transition:.2s;color:var(--tx);animation:fadeUp .4s both}
+.hbtn:hover{transform:translateX(5px);border-color:var(--acc)}
+.hbtn .info{flex:1;font-size:14px;color:var(--mu)}
+.hbtn .info b{display:block;color:var(--tx);font-size:15px}
+.hbtn .sc{margin:0;max-width:150px;font-size:20px;flex:none}
+.rhead{text-align:center;margin:6px 0 16px}
+.rhead h2{margin:10px 0 0;font-size:23px}
+
+/* settings page */
+.sp{max-width:720px;margin:0 auto}
+.sp h1{font-size:26px;margin:0 0 14px}
+.scard{background:var(--card);border:1px solid var(--bd);border-radius:28px;padding:20px;margin-bottom:18px;box-shadow:var(--shadow);animation:fadeUp .5s both}
+.scard h3{margin:0 0 14px;font-size:18px;display:flex;align-items:center;gap:8px}
+.tgl{display:flex;gap:10px}
+.tgl button{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:999px;background:var(--card2);font-weight:700;border:2px solid transparent;transition:.2s}
+.tgl button.on{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 20%,transparent)}
+.avrow{display:flex;gap:14px;justify-content:center;margin-bottom:16px}
+.avb{background:none;padding:4px;border-radius:50%;opacity:.5;transition:.25s;border:3px solid transparent}
+.avb.on{opacity:1;transform:scale(1.1);border-color:var(--acc)}
+.avb:hover{opacity:1}
+.sw{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:16px}
+.sw button{width:42px;height:42px;border-radius:50%;border:4px solid transparent;transition:.2s;box-shadow:0 4px 10px rgba(0,0,0,.15)}
+.sw button:hover{transform:scale(1.15)}
+.sw button.on{border-color:var(--tx);box-shadow:0 0 0 3px var(--card)}
+.prev{border:2px dashed var(--acc);border-radius:24px;padding:16px;background:color-mix(in srgb,var(--acc) 8%,var(--card2));margin-bottom:16px}
+.prev .pl{font-size:12px;color:var(--mu);font-weight:700;margin-bottom:10px}
+.prev .pr{display:flex;align-items:center;gap:12px;margin-bottom:12px;font-weight:700;font-size:18px}
+.prev .pq{display:flex;gap:10px;align-items:center;font-weight:700;margin-bottom:10px}
+.drow{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:18px;background:var(--card2);margin-bottom:8px;font-size:14.5px}
+.drow .di{flex:1}
+.drow .di b{display:block}
+.drow .di small{color:var(--mu)}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--acc);color:var(--ink);padding:10px 22px;border-radius:999px;font-weight:700;z-index:2000;animation:pop .3s both;box-shadow:var(--shadow)}
+@media(max-width:520px){.big{font-size:19px;padding:17px 6px}.opts.grid .opt{padding:9px 8px;font-size:14px}.cols{gap:8px}.col{padding:12px 4px}.col .nm{font-size:14px}.pw input{font-size:26px}.btn.sm{padding:7px 11px;font-size:12.5px}}
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div>
+<div id="app"></div>
+<div id="modal-root"></div>
+<script>
+/* ===== FIREBASE CONFIG (প্রজেক্ট: dynamic-typing — index.html-এর সাথে একই) =====
+   Firestore Rules-এ নিচের দুটো কালেকশন অনুমতি দিতে হবে: islam_hub (settings) ও islam_hub_hist (প্রতি ইউজারের পরীক্ষার ইতিহাস)। */
+window.FIREBASE_CONFIG={
+  apiKey:"AIzaSyAfOuZDIEESSgAB3gAq7qhgK6DxqNEmYLY",
+  authDomain:"dynamic-typing.firebaseapp.com",
+  projectId:"dynamic-typing",
+  storageBucket:"dynamic-typing.firebasestorage.app",
+  messagingSenderId:"307757637981",
+  appId:"1:307757637981:web:a2c2c4514077df0dc2c8b4"
+};
+</script>
+<script type="module">
+import {initializeApp,getApps,getApp} from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+import {getFirestore,doc,setDoc,onSnapshot} from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+import {getAuth,signInAnonymously} from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
+const c=window.FIREBASE_CONFIG;
+if(c&&c.apiKey&&c.projectId){
+ try{
+  const NAME='islam-hub';
+  const app=getApps().some(a=>a.name===NAME)?getApp(NAME):initializeApp(c,NAME);
+  const db=getFirestore(app),auth=getAuth(app);
+  /* Anonymous Auth: ইউজারকে কিছু দেখায় না; Rules-এ request.auth লাগে। ব্যর্থ হলে Rules খোলা থাকলে তবুও চলবে */
+  const authReady=(async()=>{
+   try{await auth.authStateReady();if(!auth.currentUser)await signInAnonymously(auth)}
+   catch(e){console.warn('Anonymous sign-in হয়নি (Firebase Console → Authentication → Anonymous চালু করো):',e)}
+  })();
+  const fail=e=>{console.error(e);try{toast((e&&e.code||'').includes('permission-denied')?'ক্লাউডে সেভ হয়নি — Firestore Rules Publish করো':'ক্লাউডে সেভ হয়নি — ইন্টারনেট দেখো')}catch(_){}};
+  window.cloud={ready:true,
+   saveSettings:d=>authReady.then(()=>setDoc(doc(db,'islam_hub','settings'),d)).catch(fail),
+   saveHist:(u,l)=>authReady.then(()=>setDoc(doc(db,'islam_hub_hist',u),{list:l})).catch(fail)};
+  authReady.then(()=>{
+   onSnapshot(doc(db,'islam_hub','settings'),s=>window.onCloudSettings(s.exists()?s.data():null),e=>console.error(e));
+   USERS.forEach(u=>onSnapshot(doc(db,'islam_hub_hist',u.id),s=>window.onCloudHist(u.id,s.exists()?s.data().list:null),e=>console.error(e)));
+  });
+ }catch(e){console.error(e)}
+}
+</script>
+<script>
+const USERS=[
+ {id:'nadim',bn:'নাদিম',en:'NADIM',pass:'nadimm',img:'1hAemwO3ARdyfKNumcg8DbfFqUC0_4M7a',def:'#ff9f43',admin:true},
+ {id:'rana',bn:'রানা',en:'RANA',pass:'rana123',img:'1WfaRvP2-wzNlnaYhQ64EoW1VzFfxMEJ4',def:'#4dabf7'},
+ {id:'roman',bn:'রোমান',en:'ROMAN',pass:'roman999',img:'1ElmEUUDscMzukuP7h9lLbH0DCSq5PSPr',def:'#ffd43b'}
+];
+const PALETTE=[['মিন্ট গ্রিন','#3ddc97'],['মিন্ট ইয়েলো','#ffe66d'],['মিন্ট ব্লু','#6ec6ff'],['সায়ান','#22d3ee'],['টারকুইজ','#2ec4b6'],['মিন্ট পার্পল','#b39ddb'],['অরেঞ্জ','#ff9f43'],['ব্লু','#4dabf7'],['ইয়েলো','#ffd43b']];
+
+const CQ=[
+{stim:`জনাব সাহেদ সন্তানের সুস্থতার আশায় তার পীরের নামে একটি গরু জবাই করেন। অপরদিকে তার বন্ধু আনোয়ার সম্প্রতি ফেসবুকে একটি ভিডিও দেখেন। সেখানে আলিফ নামক এক ব্যক্তি দাবি করে যে, নবী-রাসূলের আগমন একটি ধারাবাহিক প্রক্রিয়া। এটি কিয়ামত পর্যন্ত চলমান থাকবে। মুহাম্মদ (স.)-এর পর আহমদ নামে পৃথিবীতে আরও একজন নবী এসেছিলেন।`,
+parts:[
+['ঈমান কী?',1,`ইসলামি পরিভাষায়, শরিয়তের যাবতীয় বিধি-বিধান অন্তরে বিশ্বাস করা, মুখে স্বীকার করা এবং তদানুযায়ী আমল করাকে ঈমান বলে।`],
+['ইসলাম শিক্ষা গুরুত্বপূর্ণ কেন? ব্যাখ্যা করো।',2,`মানবজীবনে ইসলামি অনুশাসন ও বিধান অনুযায়ী সার্বিক জীবন পরিচালনার জন্য ইসলাম শিক্ষা অর্জন করা অত্যন্ত গুরুত্বপূর্ণ।
+সাঁতার কাটতে কিংবা গাড়ি চালাতে হলে যেমন প্রথমে সাঁতার বা গাড়ি চালনার নিয়ম শিখতে হয়, তেমনি ইসলাম অনুসারে জীবন পরিচালনা করতে হলেও প্রথমে ইসলাম সম্পর্কে জ্ঞান লাভ করতে হয়। ইসলাম শিক্ষার মাধ্যমে মানুষ মহান আল্লাহর ইবাদত ও আনুগত্য করার নিয়ম শেখে। এটি মানুষকে সৎ গুণাবলির অনুশীলন করতে, অসৎ চরিত্র পরিহার করতে এবং সুন্দর ও শান্তিপূর্ণ সমাজ গঠন করতে শেখায়। সর্বোপরি, পরকালীন জীবনে জান্নাত লাভ ও জাহান্নাম থেকে মুক্তির পথ প্রদর্শন করে বিধায় ইসলাম শিক্ষা অর্জন করা অপরিহার্য।`],
+['সাহেদের কর্মকাণ্ড চিহ্নিত করে ব্যাখ্যা করো।',3,`উদ্দীপকে বর্ণিত জনাব সাহেদের সন্তানের সুস্থতার আশায় পীরের নামে গরু জবাই করার কাজটি ইসলামি আকীদার দৃষ্টিতে শিরক।
+ইসলামি পরিভাষায়, মহান আল্লাহর সত্তা, গুণাবলি বা ইবাদতের ক্ষেত্রে অন্য কাউকে সমকক্ষ বা শরিক মনে করাকে শিরক বলা হয়। শিরক হলো তাওহিদের সম্পূর্ণ বিপরীত ধারণা। ইসলামি শরিয়তে ইবাদত ও উৎসর্গের একক মালিক একমাত্র মহান আল্লাহ। আল্লাহ তাআলা ছাড়া অন্য কোনো ব্যক্তির সন্তুষ্টির উদ্দেশ্যে বা অন্য কারও নামে পশু উৎসর্গ করা কিংবা জবাই করা ইবাদতে শিরক করার শামিল। পাঠ্যবই অনুসারে, আল্লাহ ব্যতীত অন্য কারও নামে উৎসর্গীকৃত বা জবাইকৃত পশুর গোশত খাওয়া মারাত্মক অপরাধ ও হারাম।
+উদ্দীপকে জনাব সাহেদ তাঁর অসুস্থ সন্তানের আরোগ্য লাভের জন্য মহান আল্লাহর ওপর আস্থা না রেখে এবং আল্লাহর নামে পশু জবাই না করে পীরের নামে গরু জবাই করেছেন। ইবাদত ও পশু কোরবানির ক্ষেত্রে আল্লাহর সাথে পীরকে শরিক বা মাধ্যম বানানোর এই আচরণটি স্পষ্টত শিরকের আওতাভুক্ত। পবিত্র কুরআনে বলা হয়েছে—"নিশ্চয়ই শিরক চরম জুলুম।" (সুরা লুকমান, আয়াত: ১৩)। মহান আল্লাহ তাওহিদের বিধান লঙ্ঘনকারী এবং শিরকে লিপ্ত ব্যক্তির অপরাধ ক্ষমা করেন না। সুতরাং জনাব সাহেদের উক্ত কর্মকাণ্ডটি শরিয়তের দৃষ্টিতে জঘন্যতম পাপ তথা শিরক।`],
+['আলিফের বক্তব্যের অসারতা কুরআন ও হাদিসের আলোকে প্রমাণ করো।',4,`উদ্দীপকে আলিফের দাবি—নবী-রাসুলের আগমন একটি ধারাবাহিক প্রক্রিয়া যা কিয়ামত পর্যন্ত চলবে এবং নবিজি (স.)-এর পর আরও নবী এসেছেন—এ বক্তব্যটি আকাইদের মৌলিক বিশ্বাস খতমে নবুয়তের সম্পূর্ণ বিরোধী, ভ্রান্ত ও অসার।
+ইসলামি আকিদা অনুযায়ী, মানবজাতির হিদায়াতের জন্য মহান আল্লাহ আদি পিতা আদম (আ.) থেকে শুরু করে অসংখ্য নবী-রাসুল পাঠিয়েছেন। তবে এই নবুয়ত ও রিসালাতের ধারার সর্বশেষ ও সর্বশ্রেষ্ঠ কড়ি হলেন আমাদের প্রিয় নবি হযরত মুহাম্মদ (স.)। তাঁর আগমনের মাধ্যমে নবুয়তের ধারার চিরসমাপ্তি ঘটেছে। রাসুলুল্লাহ (স.)-কে আল্লাহ তাআলা খাতামুন্নাবিয়্যীন বা সর্বশেষ নবী হিসেবে আখ্যায়িত করেছেন।
+আলিফের বক্তব্যের অসারতা নিচে কুরআন ও হাদিসের অকাট্য দলিলের মাধ্যমে তুলে ধরা হলো:
+1. কুরআনের দলিল:
+মহান আল্লাহ তাআলা পবিত্র কুরআনে স্পষ্ট ঘোষণা করেছেন: "মুহাম্মদ তোমাদের মধ্যে কোনো পুরুষের পিতা নন; বরং তিনি আল্লাহর রাসূল এবং শেষ নবী।" (সুরা আল-আহজাব, আয়াত: ৪০)।
+নবুয়ত ও আসমানি দ্বীনের পূর্ণতা সম্পর্কে আল্লাহ তাআলা এরশাদ করেন: "আজ আমি তোমাদের জন্য তোমাদের দ্বীনকে পূর্ণাঙ্গ করলাম; আর তোমাদের ওপর আমার নিয়ামতকে সম্পূর্ণ করলাম এবং ইসলামকে তোমাদের জীবনব্যবস্থা হিসেবে মনোনীত করলাম।" (সুরা আল-মায়িদা, আয়াত: ৩)।
+দ্বীন ও আসমানি হিদায়াত যেহেতু নবিজি (স.)-এর মাধ্যমে পূর্ণতা পেয়েছে, তাই কেয়ামত পর্যন্ত নতুন কোনো নবী বা রাসুল আসার বিন্দুমাত্র প্রয়োজনীয়তা নেই।
+2. হাদিসের দলিল:
+মহানবি (স.) নিজের সর্বশেষ নবুয়ত সম্পর্কে স্পষ্টভাবে সতর্ক করে বলেছেন: "আমি শেষ নবী। আমার পরে কোনো নবী নেই।" (সহিহ মুসলিম)।
+ভণ্ড ও মিথ্যা দাবিদারদের ব্যাপারে রাসুলুল্লাহ (স.) পূর্বেই ভবিষ্যৎবাণী করে গিয়েছেন: "অচিরে আমার উম্মতের মধ্যে মিথ্যাবাদীর আবির্ভাব হবে। তারা প্রত্যেকেই নবী হওয়ার দাবি করবে। অথচ আমিই সর্বশেষ নবী। আমার পর আর কোনো নবী আসবে না।" (আবুদাউদ)।
+সুতরাং, কুরআন ও হাদিসের সুস্পষ্ট ও অকাট্য প্রমাণের আলোকে প্রমাণিত হয় যে, হযরত মুহাম্মদ (স.)-এর পর আহমদ বা অন্য কোনো নামে নতুন নবী আসার দাবি সম্পূর্ণ ভণ্ডামি ও মিথ্যা চক্রান্ত। ফলে উদ্দীপকের আলিফের নবুয়ত ধারাবাহিক থাকা সংক্রান্ত বক্তব্যটি সম্পূর্ণ ভিত্তিহীন, ভ্রান্ত ও ইসলামি আকীদা-বিরোধী।`]
+]},
+{stim:`বন্যার পানিতে জনাব আমিনের মৎস্য খামার ভেসে যায়। এতে তিনি আর্থিকভাবে অনেক ক্ষতিগ্রস্থ হন। কিন্তু তিনি হতাশ হয়ে পড়েননি, বরং আল্লাহ তা'য়ালার উপর ভরসা করে নতুন উদ্যমে কাজ শুরু করেন। অন্যদিকে তার বন্ধু জনাব হেলাল একজন বড় ব্যবসায়ী। তিনি সুযোগ থাকা সত্ত্বেও পণ্যে ভেজাল মেশান না। তিনি ন্যায্যমূল্যে পণ্য বিক্রি করেন। তার সম্পর্কে জানতে পেরে একজন ইসলামিক স্কলার বলেন, "এ ধরনের ব্যবসায়িগণ কিয়ামতের দিন মহা পুরস্কার লাভ করবেন।"`,
+parts:[
+["'নাযিরা তিলাওয়াত' কী?",1,`পবিত্র আল-কুরআন দেখে দেখে পাঠ করাকে নাযিরা তিলাওয়াত বলা হয়।`],
+['ইসলামকে গতিশীল জীবনব্যবস্থা বলা হয় কেন? ব্যাখ্যা করো।',2,`যুগপ্রবাহের সাথে মানবসমাজ ও সভ্যতায় উদ্ভূত নতুন নতুন সমস্যা ও জটিলতার সমাধান প্রদানের সক্ষমতা রয়েছে বলেই ইসলামকে একটি গতিশীল জীবনব্যবস্থা বলা হয়।
+মানবসমাজ সতত পরিবর্তনশীল। সময়ের আবর্তে প্রযুক্তি, অর্থনীতি ও সামাজিক ব্যবস্থায় নানা নতুন প্রথা, জিজ্ঞাসা ও জটিলতার সৃষ্টি হয়। ইসলাম এমন এক সর্বকালীন পূর্ণাঙ্গ জীবনবিধান, যেখানে মূলনীতির আলোকে ইজমা ও কিয়াসের মাধ্যমে যুগে যুগে উদ্ভূত যেকোনো নতুন সমস্যার সমাধান বের করা সম্ভব। কুরআনিক নীতিমালা ও সুন্নাহর দৃষ্টান্ত অনুসরণ করে বিচার-বুদ্ধি প্রয়োগের এই ব্যবস্থার কারণে ইসলাম কখনো অচল বা স্থবির হয় না; বরং সর্বযুগে আধুনিক সমাধান দিতে সক্ষম হয়ে গতিশীলতা বজায় রাখে।`],
+['জনাব আমিনের আচরণে যে হাদিসের শিক্ষা ফুটে উঠেছে তা চিহ্নিত করে ব্যাখ্যা করো।',3,`উদ্দীপকের জনাব আমিনের চরম বিপদে হতাশ না হয়ে আল্লাহর ওপর তাওয়াক্কুল রেখে ধৈর্য ধারণপূর্বক পুনর্গঠনের প্রচেষ্টায় পাঠ্যবইয়ের দ্বিতীয় অধ্যায়ের ২০ নম্বর পাঠে বর্ণিত ধৈর্য ও সহিষ্ণুতা সম্পর্কিত হাদিসের (হাদিস ৯) শিক্ষা ফুটে উঠেছে।
+মানবজীবনে সুখ-শান্তির পাশাপাশি দুঃখ-কষ্ট ও বিপদ-আপদ আসবে—এটাই স্বাভাবিক নিয়ম। ইসলামি আদর্শ অনুযায়ী, একজন প্রকৃত মুমিন বিপদে অধৈর্য বা হতাশ হয়ে পথভ্রষ্ট হয় না; বরং মহান আল্লাহর ওপর ভরসা রেখে ধৈর্য ধারণ করে। ধৈর্য ও সহিষ্ণুতা প্রসঙ্গে বর্ণিত হাদিস শরিফে রাসুলুল্লাহ (স.) বলেছেন:
+"মুমিনের কাজ বিস্ময়কর। আর প্রতিটি কাজই তার জন্য কল্যাণ বয়ে আনে। আর এ কল্যাণ মুমিন ছাড়া আর কেউ লাভ করতে পারে না। যদি সে সুখ-শান্তি লাভ করে, তবে সে কৃতজ্ঞতা প্রকাশ করে। এটা তার জন্য কল্যাণকর। আর যদি সে দুঃখ-কষ্টে নিপতিত হয় তবে সে ধৈর্যধারণ করে। এটাও তার জন্য কল্যাণকর।" (সহিহ মুসলিম)।
+উদ্দীপকে জনাব আমিন বন্যার পানিতে তাঁর মৎস্য খামার ভেসে গিয়ে মারাত্মক আর্থিক ক্ষতির সম্মুখীন হন। তিনি ভেঙে না পড়ে বা চরম হতাশায় নিমজ্জিত না হয়ে আল্লাহর ফয়সালার ওপর সন্তুষ্ট থেকে ধৈর্য ধারণ করেন এবং আল্লাহ তাআলার ওপর পূর্ণ ভরসা রেখে নতুন উদ্যমে কর্ম শুরু করেন। তাঁর এই মনোভাব সুন্নাহ সমর্থিত ধৈর্য, তাওয়াক্কুল ও ইতিবাচক ঈমানি দৃষ্টিভঙ্গির উজ্জ্বল প্রতিফলন।`],
+['জনাব হেলাল সম্পর্কে ইসলামিক স্কলারের মন্তব্যটি তোমার পাঠ্যপুস্তকে উল্লিখিত সংশ্লিষ্ট হাদিসের আলোকে বিশ্লেষণ করো।',4,`জনাব হেলাল সম্পর্কে ইসলামিক স্কলারের করা মন্তব্যটি ("এ ধরনের ব্যবসায়িগণ কিয়ামতের দিন মহা পুরস্কার লাভ করবেন") পাঠ্যবইয়ের দ্বিতীয় অধ্যায়ের ১৯ নম্বর পাঠে বর্ণিত ব্যবসায়ে সততা সম্পর্কিত হাদিসের (হাদিস ৮) পূর্ণ সমর্থক ও যথার্থ।
+ইসলামে ব্যবসা-বাণিজ্যকে একটি অত্যন্ত পবিত্র ও হালাল পেশা হিসেবে স্বীকৃতি দেওয়া হয়েছে। তবে এই পেশাকে সততা, ন্যায়পরায়ণতা, আমানতদারি ও শরিয়তের নীতি-আদর্শের ভিত্তিতে পরিচালনা করার তাগিদ দেওয়া হয়েছে। ব্যবসায় কৃত্রিম সংকট তৈরি করা, মাপে কম দেওয়া, দ্রব্যাদিতে ভেজাল মেশানো এবং ক্রেতাকে ঠকানো ইসলামে কঠোরভাবে নিষিদ্ধ ও কবিরা গুনাহ। পক্ষান্তরে লৌকিকতা ও লোভ-লালসা বিসর্জন দিয়ে সৎভাবে পণ্য কেনাবেচার নামই সততা ও বিশ্বস্ততা।
+ব্যবসায়ে সততা ও বিশ্বস্ততার পুরস্কার ঘোষণা করে মহানবি (স.) এরশাদ করেছেন: "বিশ্বস্ত, সত্যবাদী মুসলিম ব্যবসায়ী কিয়ামতের দিন শহীদগণের সঙ্গে থাকবেন।" (ইবনে মাজাহ)।
+উদ্দীপকের জনাব হেলাল একজন বড় ব্যবসায়ী হওয়া সত্ত্বেও অসৎ উপায়ে অধিক মুনাফা লাভের সুযোগ গ্রহণ করেননি। তিনি পণ্যে ভেজাল মেশানো থেকে বিরত থাকেন, পণ্যের সঠিক মান বজায় রাখেন এবং গ্রাহকদের নিকট ন্যায্যমূল্যে পণ্য বিক্রি করেন। এতে তাঁর ব্যবসায়িক লেনদেনে চরম সততা, বিশ্বস্ততা ও আমানতদারির মানসিকতা প্রকাশ পেয়েছে। ইসলামি শরিয়তের দৃষ্টিতে যাঁরা পার্থিব লোভ-লালসা ত্যাগ করে আল্লাহর ভয়ে সততার সাথে ব্যবসা করেন, আখিরাতে তাঁরা বিচারে নবীদের অনুগামী এবং ইসলাম রক্ষায় আত্মোৎসর্গকারী শহীদদের সাথে জান্নাতে অবস্থান করার মহান মর্যাদা লাভ করবেন।
+অতএব, সততার সাথে ব্যবসা পরিচালনার দরুন কিয়ামতের কঠিন ময়দানে জনাব হেলালের মতো সৎ ব্যবসায়ীদের অশেষ নেকি ও জান্নাতরূপী মহা পুরস্কার পাওয়ার বিষয়ে ইসলামিক স্কলার যে মন্তব্যটি করেছেন, তা সংশ্লিষ্ট হাদিসের আলোকে শতভাগ সঠিক ও তাৎপর্যপূর্ণ।`]
+]},
+{stim:`মিসেস ফারিহা বছরান্তে দশ ভরি স্বর্ণের গহনার বাজারমূল্য দশ লক্ষ টাকা থেকে নির্দিষ্ট ইবাদত পালন বাবদ ২.৫০% টাকা দুঃস্থ বিধবাদের মধ্যে পুনর্বাসনের জন্য বিতরণ করেন। অপরদিকে ফারিহার স্বামী মুরাদ অপর একটি পবিত্র ইবাদত পালনের জন্য নির্দিষ্ট সময়ে মক্কায় গমন করেন। সেখানে অবস্থানকালে তিনি বিভিন্ন দেশের মানুষের সাথে ভাবের আদান-প্রদান ও মতবিনিময় করেন।`,
+parts:[
+['সাওম কাকে বলে?',1,`ইসলামি শরিয়তের পরিভাষায়, সুবহে সাদিক থেকে সূর্যাস্ত পর্যন্ত আল্লাহর সন্তুষ্টি লাভের আশায় নির্দিষ্ট নিয়তের সাথে পানাহার ও ইন্দ্রিয় তৃপ্তি থেকে বিরত থাকাকে সাওম (রোজা) বলে।`],
+['ছাত্র-শিক্ষক সম্পর্ক হলো আত্মার সম্পর্ক— বুঝিয়ে লেখো।',2,`ছাত্র-শিক্ষক সম্পর্ক পিতা-পুত্রের সম্পর্কের ন্যায় অত্যন্ত নিবিড় ও পবিত্র, তাই একে আত্মার সম্পর্ক বলা হয়ে থাকে।
+পিতা যেমন সন্তানকে জন্ম দিয়ে লালন-পালন করেন এবং সর্বদা তার কল্যাণ কামনা করেন, শিক্ষকের ভূমিকাও তেমনই। শিক্ষক তাঁর ছাত্রকে স্নেহের বন্ধনে আবদ্ধ করে সত্য, ন্যায়, নৈতিকতা ও দ্বীনি ও পার্থিব জ্ঞানে ভূষিত করে সুনাগরিক হিসেবে গড়ে তোলেন। সন্তান যেমন পিতার সম্পদের উত্তরাধিকারী হয়, তেমনি ছাত্র শিক্ষকের নিকট থেকে অর্জিত জ্ঞানের সত্যিকার উত্তরাধিকারী হয়ে সমাজে জ্ঞানের আলো ছড়ায়। তাঁদের মধ্যে ভালোবাসা, পরম শ্রদ্ধা ও ত্যাগের আত্মিক টান বিরাজ করে বলেই ছাত্র-শিক্ষকের সম্পর্ককে আত্মার সম্পর্ক বলা হয়।`],
+['মিসেস ফারিহা ইসলামের কোন ইবাদতটি পালন করেছেন? ব্যাখ্যা করো।',3,`উদ্দীপকে বর্ণিত মিসেস ফারিহা ইসলামের অত্যন্ত গুরুত্বপূর্ণ রুকন যাকাত আদায় নামক আর্থিক ইবাদতটি পালন করেছেন।
+ইসলামি শরিয়তের পরিভাষায়, কোনো মুসলিম নিসাব পরিমাণ সম্পদের মালিক হলে বছরান্তে তার সঞ্চিত সম্পদের শতকরা ২.৫০% (আড়াই শতাংশ) হারে নির্দিষ্ট খাতে দুঃস্থ ও অভাবীদের মধ্যে বিতরণ করাকে যাকাত বলা হয়। যাকাত ধনী ব্যক্তিদের দয়া বা অনুকম্পা নয়; বরং এটি ধনীর সম্পদে দরিদ্রের আল্লাহ-নির্ধারিত ন্যায্য অধিকার।
+উদ্দীপকে মিসেস ফারিহা তাঁর বছরান্তে গচ্ছিত ১০ ভরি স্বর্ণের গহনার বাজারমূল্য ১০ লক্ষ টাকা থেকে শরিয়তের নির্ধারিত ২.৫০% হারে টাকা দুঃস্থ বিধবাদের পুনর্বাসনের জন্য বিতরণ করেছেন। শরিয়ত নির্দেশিত এই নিয়ম মেনে সম্পদ থেকে নির্দিষ্ট অংশ দুস্থদের মাঝে বণ্টন করার মাধ্যমে মিসেস ফারিহা তাঁর যাকাত আদায়ের ফরজ দায়িত্ব সফলভাবে পালন করেছেন। এর ফলে তাঁর সম্পদ পবিত্র ও বৃদ্ধি পাবে এবং সমাজে অর্থনৈতিক সাম্য প্রতিষ্ঠিত হবে।`],
+['ফারিহার স্বামীর পালনকৃত ইবাদতটি চিহ্নিতপূর্বক এর থেকে কোন ধরনের শিক্ষা লাভ করতে পেরেছেন? ব্যাখ্যা করো।',4,`উদ্দীপকে মিসেস ফারিহার স্বামী জনাব মুরাদের পালনকৃত ইবাদতটি হলো হজ। তিনি এই ইবাদত পালনের মাধ্যমে বিশ্বভ্রাতৃত্ববোধ, সাম্য, একতা ও অসাম্প্রদায়িক মানবিক চেতনার শিক্ষা লাভ করতে পেরেছেন।
+পবিত্র মক্কায় নির্দিষ্ট দিনসমূহে নির্ধারিত নিয়মে বাইতুল্লাহ ও সংশ্লিষ্ট পবিত্র স্থানসমূহ যিয়ারত করে ইবাদত সম্পাদন করাকে হজ বলে। হজের সামাজিক ও বৈশ্বিক গুরুত্ব অপরিসীম। পবিত্র কুরআনে আল্লাহ তাআলা হজকে মানবজাতির জন্য এক মহান সম্মেলন হিসেবে ঘোষণা করেছেন।
+উদ্দীপকে জনাব মুরাদ হজ পালনের উদ্দেশ্যে পবিত্র মক্কায় গমন করেন এবং সেখানে অবস্থানকালে বিশ্বের বিভিন্ন দেশ ও সংস্কৃতির মানুষের সাথে ভাবের আদান-প্রদান ও মতবিনিময় করার সুযোগ পান।
+হজ মানুষকে যে সকল সার্বিক শিক্ষা প্রদান করে:
+1. বিশ্বভ্রাতৃত্ব ও সাম্য: হজে ধনী-দরিদ্র, রাজা-প্রজা, সাদা-কালো এবং বিশ্বের যেকোনো প্রান্তের মানুষের বর্ণ বা ভাষার পার্থক্য বিলুপ্ত হয়ে যায়। সকলেই সেলাইবিহীন একই সাদা কাপড় (ইহরাম) পরিধান করে এক মহান প্রভুর দরবারে নিজেকে সমর্পণ করে 'লাব্বাইক' ধ্বনিতে সমবেত হয়।
+2. ঐক্য ও সহানুভূতি: বিশ্বের নানা কোণ থেকে আগত মুসলিম উম্মাহ একে অপরের দুঃখ-কষ্ট, চালচলন ও সংস্কৃতি সম্পর্কে অবহিত হতে পারে এবং পারস্পরিক সৌহার্দ্য ও ভ্রাতৃত্ববোধ জাগ্রত হয়।
+3. শৃঙ্খলা ও ত্যাগের শিক্ষা: হজের প্রতিটি নিয়ম-কানুন মানুষকে সুশৃঙ্খল জীবনযাপন ও আল্লাহর সন্তুষ্টির উদ্দেশ্যে ত্যাগ স্বীকার করতে শেখায়।
+অতএব, মক্কায় হজের সময় বিভিন্ন দেশের মুসলিমদের সাথে ভাবের আদান-প্রদান করে জনাব মুরাদ মূলত বিশ্ব মুসলিমের অখণ্ড ঐক্য, সাম্য ও বিশ্বভ্রাতৃত্ববোধের এক মহান শিক্ষা লাভ করেছেন।`]
+]},
+{stim:`মৃদুল তার এলাকার ক্ষুদ্র ব্যবসায়ীদের মাঝে দুমাসের জন্য ঋণ বিতরণ করে প্রতি হাজারে বারশত টাকা করে ফেরত নেয়। অপরদিকে জীবন সাহেব তার সহকর্মী নীরব সাহেবের পদোন্নতির খবর শুনে অত্যন্ত মর্মাহত হন। তিনি নীরব সাহেবের ক্ষতির জন্য উঠে পড়ে লেগে যান।`,
+parts:[
+["'আমর বিল মারুফ'-এর পরিচয় দাও।",1,`ইসলামি পরিভাষায়, মানুষকে যেকোনো ন্যায়, কল্যাণকর ও ইসলামসম্মত কাজের নির্দেশ দান করা, উৎসাহিত করা ও অনুপ্রাণিত করাকে আমর বিল মারুফ (সৎকাজের আদেশ) বলে।`],
+['আত্মশুদ্ধি কেন প্রয়োজন? ব্যাখ্যা করো।',2,`মানবদেহের চালিকাশক্তি 'কালব' বা অন্তরকে পাপাচার থেকে মুক্ত রাখা এবং ইহকাল ও পরকালে সফলতা অর্জনের জন্য আত্মশুদ্ধি অর্জন করা অত্যন্ত প্রয়োজন।
+রাসুলুল্লাহ (স.) এরশাদ করেছেন যে, মানবদেহের মধ্যে একটি গোশতপিণ্ড রয়েছে, তা যদি সংশোধিত হয় তবে গোটা শরীর সংশোধিত হয়; আর তা যদি কলুষিত হয়ে যায় তবে গোটা শরীরই কলুষিত হয়ে পড়ে; জেনে রাখো তা হলো কালব বা অন্তর।
+মহান আল্লাহ স্বয়ং পবিত্র; তাই তিনি পবিত্রতা ব্যতীত কোনো ইবাদত বা বান্দাকে পছন্দ করেন না। আত্মশুদ্ধি বা তাযকিয়াতুন নাফস-এর মাধ্যমে মানুষের অন্তরের হিংসা, অহংকার, লোভ-লালসা ও পাপাচারের অনৈতিক চিন্তা দূর হয়ে সৎকাজের উদ্দীপনা জাগে। পবিত্র কুরআনে মহান আল্লাহ ঘোষণা করেছেন— "নিশ্চয়ই যে ব্যক্তি আত্মাকে পূত-পবিত্র রাখবে সেই সফলকাম হবে, আর সে-ই ব্যর্থ হবে, যে নিজেকে কলুষিত করবে।" (সুরা আশ-শামস, আয়াত: ৯-১০)। তাই ইহকালীন শান্তির পাশাপাশি আখেরাতে মুক্তি ও জান্নাত লাভের জন্য আত্মশুদ্ধি অর্জন আবশ্যক।`],
+['মৃদুলের কর্মকাণ্ডে আখলাকে যামিমাহ-এর কোন বিষয়টি ধরা পড়েছে? ব্যাখ্যা করো।',3,`উদ্দীপকের মৃদুলের কর্মকাণ্ডে আখলাকে যামিমাহ বা নিন্দনীয় চরিত্রের জঘন্যতম অনৈতিক বিষয় সুদ (রিবা) গ্রহণ করার বিষয়টি ধরা পড়েছে।
+ইসলামি শরিয়তের পরিভাষায়, কাউকে প্রদত্ত ঋণের মূল পরিমাণের ওপর চুক্তি অনুযায়ী শর্তসাপেক্ষে অতিরিক্ত আদায় করা অর্থ বা লাভকে সুদ (রিবা) বলা হয়। মহানবি (স.) সুদের সংজ্ঞা দিয়ে বলেন, "যে ঋণ কোনো লাভ নিয়ে আসে তা-ই রিবা (সুদ)।" (জামিসগির)।
+উদ্দীপকে মৃদুল এলাকার অভাবী ক্ষুদ্র ব্যবসায়ীদের দুমাসের জন্য ঋণ দিয়ে প্রতি ১,০০০ টাকায় ১,২০০ টাকা (অর্থাৎ ২০০ টাকা অতিরিক্ত অর্থ) ফেরত নেয়। মূল ঋণের অতিরিক্ত এই নির্দিষ্ট অর্থ গ্রহণ করা সরাসরি সুদের আওতাভুক্ত।
+সুদ গ্রহণ করা ইসলামি শরিয়তে মারাত্মক কবিরা গুনাহ ও হারাম। আল্লাহ তাআলা কুরআনে ঘোষণা করেছেন, "আল্লাহ ব্যবসাকে হালাল করেছেন এবং সুদকে করেছেন হারাম।" (সুরা আল-বাকারাহ, আয়াত: ২৭৫)। সুদ সমাজে ধনী ও দরিদ্রের মাঝে চরম বৈষম্য তৈরি করে এবং ঋণগ্রহীতাকে শোষণ করে সর্বস্বান্ত করে তোলে। সুতরাং ঋণের বিনিময়ে লাভ গ্রহণ করে মৃদুল স্পষ্টতই ইসলামি শরিয়তবিরোধী জঘন্য সুদি কারবারে লিপ্ত হয়েছেন।`],
+['জীবন সাহেবের চরিত্রটি চিহ্নিত করে এর পরিণতি বিশ্লেষণ করো।',4,`উদ্দীপকে বর্ণিত জীবন সাহেবের চরিত্রে আখলাকে যামিমাহ-এর অন্তর্গত অত্যন্ত নিন্দনীয় ও ক্ষতিকর বৈশিষ্ট্য হিংসা (হাসাদ) প্রতিফলিত হয়েছে।
+ইসলামি পরিভাষায়, অপরের সুখ-সম্পদ, সাফল্য ও অগ্রগতি সহ্য করতে না পেরে তার ধ্বংস বা ক্ষতি কামনা করা এবং নিজে তার মালিক হওয়ার মানসিকতাকে হিংসা বলে। উদ্দীপকে জীবন সাহেব তাঁর সহকর্মী নীরব সাহেবের পদোন্নতির শুভ সংবাদ শুনে উৎফুল্ল না হয়ে মর্মাহত হন এবং নীরব সাহেবের অপকার ও ক্ষতির জন্য উঠে পড়ে লাগেন; যা হিংসার প্রত্যক্ষ বহিঃপ্রকাশ।
+ইসলামে হিংসার পরিণতি অত্যন্ত ভয়াবহ ও শোচনীয়। নিচে তা বিশ্লেষণ করা হলো:
+1. নেক আমল বিনাশ করে: হিংসা মানুষের জীবনভর অর্জিত সকল ভালো ও পুণ্য কাজ ধ্বংস করে দেয়। মহানবি (স.) সতর্ক করে বলেছেন— "তোমরা হিংসা থেকে বেঁচে থাকো। কেননা আগুন যেমন কাঠকে খেয়ে ফেলে (পুড়িয়ে ছাই করে দেয়), হিংসাও তেমনি মানুষের সৎকর্মগুলোকে খেয়ে ফেলে (বিনষ্ট করে)।" (আবুদাউদ)।
+2. আল্লাহর অসন্তুষ্টি ও ক্ষমা না পাওয়া: হিংসুক ব্যক্তি মহান আল্লাহর চরম অসন্তুষ্টি অর্জন করে। হাদিসে বর্ণিত হয়েছে, তিন ব্যক্তির গুনাহ আল্লাহ মাফ করেন না, যার মধ্যে অন্যতম হলো অন্যের প্রতি বিদ্বেষ বা হিংসা পোষণকারী ব্যক্তি।
+3. পাপাচারের প্রসার ও সামাজিক অশান্তি: হিংসুক লোক নিজের হিংসার আগুন নিভাতে গিয়ে পরনিন্দা, গিবত, ষড়যন্ত্র, মিথ্যাচার ও অন্যের মারাত্মক ক্ষতি সাধনে লিপ্ত হয়। এতে সমাজে শান্তি-শৃঙ্খলা বিঘ্নিত হয় এবং পারস্পরিক ভ্রাতৃত্ব বিনষ্ট হয়।
+4. আখিরাতে জাহান্নামের শাস্তি: হিংসা মানুষের পরকালীন জীবনকে ধ্বংস করে দেয়। হিংসুক ব্যক্তি আখিরাতে আল্লাহর দয়া লাভ করতে পারবে না এবং জাহান্নামের কঠিন আযাব ভোগ করবে।
+পরিশেষে বলা যায়, জীবন সাহেবের এই হিংসাত্মক মনোভাব তাঁকে সমাজেও ঘৃণিত করে তুলবে এবং আখেরাতে তাঁর সকল সৎকর্ম বিনষ্ট করে চরম ক্ষতির মুখোমুখি করবে। সুতরাং তাঁর উচিত অবিলম্বে এই জঘন্য পাপ থেকে তওবা করে সৎ ও নিষ্কলুষ চরিত্র গড়ে তোলা।`]
+]},
+{stim:`জাবিরুল তার সহপাঠী তৈমুরকে বলছিল যে, আজকে পরীক্ষা চলাকালে সে অবৈধ পন্থা অবলম্বন করেছে। কিন্তু পরিদর্শক এটা দেখেনি। এটি শুনে তৈমুর বলল, “যারা এরূপ করেছে তারা এটি করতে পারে না। কারণ, সর্বশক্তিমান আল্লাহ সবকিছু দেখেন। আর কে জানে না, যে নকল করা একটি অনৈতিক কাজ?”`,
+parts:[
+['‘আল-আহদু’ অর্থ কী?',1,`‘আল-আহদু’ (اَلْعَهْدُ) শব্দের শাব্দিক অর্থ হলো— ওয়াদা, অঙ্গীকার, প্রতিশ্রুতি, চুক্তি, কাউকে কোনো কথা দেওয়া বা কোনো কাজ করার জন্য প্রতিজ্ঞাবদ্ধ হওয়া।`],
+['তাকওয়া বলতে কী বোঝায়?',2,`ইসলামি পরিভাষায়, আল্লাহ তাআলার ভয়ে যাবতীয় অন্যায়, অত্যাচার ও পাপকাজ থেকে নিজেকে বিরত রেখে কুরআন ও সুন্নাহ মোতাবেক জীবন পরিচালনা করাকে তাকওয়া বলা হয়।
+‘তাকওয়া’ শব্দের আভিধানিক অর্থ বেঁচে থাকা, বিরত থাকা, ভয় করা বা নিজেকে রক্ষা করা। একজন মুমিন যখন মনে মনে বিশ্বাস করে যে মহান আল্লাহ সর্বদ্রষ্টা এবং পরকালে তাঁকে সকল কাজের জন্য হিসাব দিতে হবে, তখন তাঁর মনে যে খোদাভীতির জাগ্রত অনুভূতি তৈরি হয়, তাকেই তাকওয়া বলে। যিনি তাকওয়া অবলম্বন করে জীবনযাপন করেন, তাঁকে শরিয়তের পরিভাষায় ‘মুত্তাকি’ বলা হয়।`],
+['কুরআন ও হাদিসের আলোকে জাবিরুলের কার্যক্রম সম্পর্কে তোমার মতামত দাও।',3,`উদ্দীপকে বর্ণিত জাবিরুলের পরীক্ষায় অসদুপায় বা নকল অবলম্বন করার কার্যক্রমটি ইসলামি শরিয়তের দৃষ্টিতে একটি জঘন্য অনৈতিক কাজ এবং ‘প্রতারণা’ (ধোঁকাবাজি/খিয়ানত)-এর শামিল।
+ইসলামি পরিভাষায়, প্রকৃত অবস্থা গোপন রেখে ফাঁকি বা ধোঁকার ওপর ভিত্তি করে নিজের কোনো স্বার্থ হাসিল করাকে প্রতারণা বলা হয়। পরীক্ষায় নকল করা হলো প্রতারণার একটি স্পষ্ট ও মারাত্মক রূপ। জাবিরুল পরীক্ষার হলে দায়িত্বপ্রাপ্ত পরিদর্শকের অগোচরে নকল করে অবৈধ সুবিধা নেওয়ার চেষ্টা করেছে, যা তার মিথ্যাচার ও আমানতের খিয়ানতকে নির্দেশ করে।
+কুরআন ও হাদিসের আলোকে জাবিরুলের এই অপকর্মের মতামত নিচে দেওয়া হলো:
+1. হাদিসের আলোকে: রাসুলুল্লাহ (স.) প্রতারণাকারীদের শরিয়তের গণ্ডি থেকে বহির্ভূত ঘোষণা করে সতর্ক করেছেন। তিনি বলেন— “যে প্রতারণা করে, সে আমাদের দলভুক্ত নয়।” (সহিহ মুসলিম)। অন্য হাদিসে বর্ণিত হয়েছে, রাসুলুল্লাহ (স.) বলেন— “যে ধোঁকা দেয় সে আমার উম্মতের অন্তর্ভুক্ত হতে পারে না।”
+2. কুরআনের আলোকে: পবিত্র কুরআনে সত্য ও মিথ্যাকে মিশ্রিত করে প্রতারণা করা কঠোরভাবে নিষেধ করা হয়েছে। মহান আল্লাহ বলেন— “আর তোমরা সত্যের সাথে মিথ্যার মিশ্রণ করো না এবং জেনে-বুঝে সত্য গোপন করো না।” (সুরা আল-বাকারাহ, আয়াত: ৪২)।
+পরীক্ষায় নকল করার মাধ্যমে জাবিরুল নিজের মেধা ও যোগ্যতার ভুয়া প্রমাণ তৈরি করেছে এবং পরিদর্শক তথা শিক্ষা কর্তৃপক্ষকে ধোঁকা দিয়েছে। সুতরাং কুরআন ও হাদিসের অকাট্য প্রমাণের ভিত্তিতে জাবিরুলের এই কর্মকাণ্ডটি একটি মারাত্মক কবিরা গুনাহ, অনৈতিক ও সম্পূর্ণ হারাম কাজ।`],
+['তৈমুরের মতামত থেকে আমাদের জীবনে কী ধরনের শিক্ষা গ্রহণ করা উচিত? সংক্ষেপে মূল্যায়ন করো।',4,`উদ্দীপকের তৈমুরের মতামত থেকে আমাদের জীবনে ‘তাকওয়া (খোদাভীতি), সর্বব্যাপী আল্লাহর নজরদারির অনুভূতি এবং অসৎকাজে বাধা দেওয়ার (নাহি আনিল মুনকার)’ শিক্ষা গ্রহণ করা উচিত।
+তৈমুর তার বন্ধু জাবিরুলকে মনে করিয়ে দিয়েছে যে, পরীক্ষার পরিদর্শক না দেখলেও সর্বশক্তিমান আল্লাহ তাআলা সবকিছু দেখছেন এবং নকল করা একটি অনৈতিক কাজ।
+তৈমুরের এই মতামতের প্রাসঙ্গিকতা নিচে মূল্যায়ন করা হলো:
+1. আল্লাহর সর্বদ্রষ্টা গুণের অনুভূতি (তাকওয়া): মানবজীবনের মূল চালিকাশক্তি হলো তাকওয়া। আল্লাহ তাআলা সার্বক্ষণিক আমাদের প্রতিটি কাজ প্রত্যক্ষ করছেন। আল্লাহ তাআলা বলেন— “তিনিই প্রথম, তিনিই শেষ, তিনি প্রকাশ্য, তিনি গোপন এবং তিনি সর্ব বিষয়ে সম্যক অবহিত।” (সুরা আল-হাদিদ, আয়াত: ৩)। তৈমুরের এই অনুভূতির কারণে সে উপলব্ধি করতে পেরেছে যে, মানুষের নজর এড়ানো গেলেও আল্লাহর বিচার থেকে পালানো অসম্ভব।
+2. পরকালের জবাবদিহিতা ও আত্মসংযম: মুমিন ব্যক্তি সর্বদা মনে রাখে যে তাকে একদিন আল্লাহর দরবারে হাজির হয়ে যাবতীয় কৃতকর্মের হিসাব দিতে হবে। আল্লাহ তাআলা বলেন— “যে ব্যক্তি তার প্রতিপালকের সামনে দণ্ডায়মান হওয়ার ভয় রাখে এবং কুপ্রবৃত্তি থেকে নিজেকে বিরত রাখে, জান্নাতই হবে তার আবাসন।” (সুরা আন-নাযিআত, আয়াত: ৪০-৪১)।
+3. অসৎকাজে বাধা দেওয়া (নাহি আনিল মুনকার): তৈমুর কেবল নিজে অসৎ কাজ থেকে বিরত থাকেনি, বরং জাবিরুলকে নীতিশিক্ষা দিয়ে অন্যায় থেকে বিরত রাখার তাগিদ দিয়েছে, যা শরিয়তের বিচারে 'নাহি আনিল মুনকার'-এর দায়িত্ব পালন।
+মূল্যায়ন: তৈমুরের মতামত আমাদের এই শিক্ষা দেয় যে, বাস্তব জীবনে যখন একজন মানুষের অন্তরে আল্লাহর সর্বব্যাপী উপস্থিতি ও পরকালের জবাবদিহিতার ভয় জাগ্রত থাকে, তখন সে কোনো অবস্থাতেই গোপন বা প্রকাশ্য অন্যায়, দুর্নীতি, চুরি বা প্রতারণায় লিপ্ত হতে পারে না। তৈমুরের মতো সততা, খোদাভীতি ও নৈতিক চেতনা গড়ে তুলতে পারলে সমাজে অসৎকাজ নির্মূল হয়ে ন্যায় ও সত্যের শাসন প্রতিষ্ঠিত হবে।`]
+]},
+{stim:`জনাব লিমন একজন বিত্তশালী ব্যক্তি। তিনি জনাব নোমানের উপর অনেক অত্যাচার করেন। এমনকি তাঁর অত্যাচারের কারণে নোমান নিজ এলাকা ছেড়ে অন্যত্র চলে যান। পরবর্তীতে জনাব নোমান সুযোগ পাওয়ার পরেও তাঁর প্রতি শোধ গ্রহণ করেননি। আর তার ছোট ভাই জনাব মানিক উপজেলা চেয়ারম্যান হিসেবে নির্বাচিত হওয়ার পরেও সাধারণ মানুষের মতো জীবনযাপন করেন। নিজের কাজ নিজ হাতে সম্পাদন করেন।`,
+parts:[
+["'কিতাবুল মানাযির' কী বিষয়ক গ্রন্থ?",1,`'কিতাবুল মানাযির' (Kitab al-Manazir) হলো বিখ্যাত মুসলিম বিজ্ঞানী ইবনুল হাইছাম (Ibn al-Haytham) রচিত আলোকবিজ্ঞান বা পদার্থবিজ্ঞান (Optics/Physics) বিষয়ক একটি বিশ্ববিখ্যাত আকর গ্রন্থ।`],
+['জাবির ইবনে হাইয়ানকে রসায়ন শাস্ত্রের জনক বলা হয় কেন?',2,`রসায়নশাস্ত্রকে বৈজ্ঞানিক পরীক্ষা-নিরীক্ষার মাধ্যমে প্রথম একটি স্বতন্ত্র ও পূর্ণাঙ্গ বিজ্ঞান শাখা হিসেবে প্রতিষ্ঠা করার ঐতিহাসিক অবদানের জন্য জাবির ইবনে হাইয়ানকে রসায়ন শাস্ত্রের জনক বলা হয়।
+জাবির ইবনে হাইয়ান ছিলেন একজন খ্যাতনামা মুসলিম বিজ্ঞানী ও চিকিৎসক। তিনি কুফায় একটি গবেষণাগার প্রতিষ্ঠা করে গবেষণার মাধ্যমে রসায়নবিজ্ঞানের মৌলিক কিছুপদ্ধতি—যেমন পরিস্রবণ, দ্রবণ, বাষ্পীকরণ, পাতন, ভস্মীকরণ, তরলীকরণ ইত্যাদি প্রক্রিয়া উদ্ভাবন করেন। এছাড়া ধাতুর শোধন, ইস্পাত তৈরি, লোহার মরিচারোধক বার্নিশ, লেখার কালি ও কাঁচ প্রস্তুতপ্রণালীর বিস্তৃত বিবরণ দান করে রসায়নশাস্ত্রকে পূর্ণাঙ্গ রূপ দেন। তাঁর এসব কালজয়ী গবেষণার জন্যই তাঁকে রসায়ন শাস্ত্রের জনক হিসেবে অভিহিত করা হয়।`],
+['জনাব নোমানের চরিত্রে কোন মহামানবের চারিত্রিক মিল খুঁজে পাওয়া যায়? ব্যাখ্যা করো।',3,`উদ্দীপকের জনাব নোমানের চরিত্রে সর্বকালের সর্বশ্রেষ্ঠ মহামানব হযরত মুহাম্মদ (স.)-এর চারিত্রিক মিল (বিশেষ করে তাঁর মক্কা বিজয়কালে শত্রুদের প্রতি অসীম ক্ষমা প্রদর্শনের মহান আদর্শ) খুঁজে পাওয়া যায়।
+মহানবি (স.) মক্কায় প্রকাশ্যে ইসলামের দাওয়াত দিতে শুরু করলে কুরাইশরা তাঁর ওপর অকথ্য নির্যাতন চালায়। একপর্যায়ে কাফিররা তাঁকে হত্যার চক্রান্ত করলে আল্লাহর নির্দেশে তিনি প্রিয় জন্মভূমি মক্কা ছেড়ে মদিনায় হিজরত করতে বাধ্য হন। পরবর্তীতে ৮ম হিজরিতে রাসুলুল্লাহ (স.) ১০,০০০ মুসলিম সৈন্য নিয়ে বিজয়ী বেশে মক্কায় প্রবেশ করেন। মক্কার যে কাফিররা নবিজি (স.) ও সাহাবিদের ওপর অত্যাচার করেছিল, সুযোগ পেয়েও রাসুলুল্লাহ (স.) তাদের ওপর কোনো প্রতিশোধ নেননি; বরং বিনাশর্তে সবাইকে সাধারণ ক্ষমা ঘোষণা করে বলেন— “আজ তোমাদের প্রতি আমার কোনো অভিযোগ নেই, যাও তোমরা মুক্ত ও স্বাধীন।”
+উদ্দীপকের জনাব নোমান বিত্তশালী লিমনের অমানুষিক অত্যাচার সহ্য করতে না পেরে বাধ্য হয়ে নিজ এলাকা ছেড়ে অন্যত্র চলে যান, যা রাসুলুল্লাহ (স.)-এর মক্কা থেকে মদিনায় হিজরতের সাথে সাদৃশ্যপূর্ণ। পরবর্তীতে নোমান প্রতিশোধ নেওয়ার মতো পূর্ণ সামর্থ্য ও সুযোগ লাভ করা সত্ত্বেও লিমনের ওপর প্রতিশোধ না নিয়ে তাকে ক্ষমা করে দেন। নোমানের এই অসামান্য ক্ষমাশীলতা ও উদারতা সরাসরি মহানবি (স.)-এর মক্কা বিজয়ের পর শত্রু মনোভাবাপন্ন মক্কাবাসীদের প্রতি প্রদর্শিত ঐতিহাসিক সাধারণ ক্ষমার মহৎ আদর্শকে প্রতিফলিত করে।`],
+['জনাব মানিকের জীবনযাপন পদ্ধতি খুলাফায়ে রাশেদিনের জীবনআদর্শের আলোকে চিহ্নিত করে বিশ্লেষণ করো।',4,`উদ্দীপকের জনাব মানিকের জীবনযাপন পদ্ধতিতে খুলাফায়ে রাশেদিনের ‘অনাড়ম্বর জীবনধারা, স্বাবলম্বিতা, কায়িক শ্রমের প্রতি শ্রদ্ধা এবং প্রজাহিতৈষী জনসেবা’-এর মহান চরিত্র ও জীবনআদর্শ বাস্তবায়িত হয়েছে।
+'খুলাফায়ে রাশেদিন' হলেন ইসলামের সঠিক পথপ্রাপ্ত চারজন খলিফা—হযরত আবুবকর (রা.), হযরত ওমর (রা.), হযরত উসমান (রা.) ও হযরত আলী (রা.)। তাঁরা বিশাল মুসলিম সাম্রাজ্যের রাষ্ট্রের সর্বোচ্চ পদে অধিষ্ঠিত থাকা সত্ত্বেও রাজকীয় বিলাসিতা ত্যাগ করে সাধারণ মানুষের মতো জীবনযাপন করতেন।
+খুলাফায়ে রাশেদিনের জীবনাদর্শের সাথে জনাব মানিকের জীবনযাপনের মিলসমূহ নিচে বিশ্লেষণ করা হলো:
+1. অনাড়ম্বর জীবনযাপন: প্রথম খলিফা হযরত আবুবকর (রা.) ও দ্বিতীয় খলিফা হযরত ওমর (রা.) রাষ্ট্রের সর্বোচ্চ শাসক হয়েও খিলাফতের বায়তুল মাল থেকে সামান্য ভাতা নিয়ে অতি সাধারণ কায়দায় জীবনযাপন করতেন।
+2. নিজের কাজ নিজ হাতে করা: চতুর্থ খলিফা হযরত আলী (রা.) খলিফা হওয়ার পরও অত্যন্ত সাদামাটা জীবনযাপন করতেন এবং নিজ হাতে কাজ করে জীবিকা নির্বাহ করতেন। এমনকি তাঁর বাসায় কোনো কাজের লোক ছিল না এবং তাঁর পরিবার নিজ হাতে যাঁতা পিষে রুটি তৈরি করত।
+3. জনপ্রতিনিধির দায়বদ্ধতা: হযরত ওমর (রা.) খলিফা হিসেবে রাতের আঁধারে ছদ্মবেশে প্রজাদের সার্বিক অবস্থা ঘুরে দেখতেন এবং নিজের কাঁধে করে দুস্থদের জন্য খাদ্য বহন করতেন।
+উদ্দীপকের জনাব মানিক একজন জনপ্রতিনিধি তথা উপজেলা চেয়ারম্যান নির্বাচিত হওয়া সত্ত্বেও পদমর্যাদার অহংকার বা বিলাসিতায় মত্ত হননি। তিনি খুলাফায়ে রাশেদিনের মতো অত্যন্ত বিনয়ী হয়ে সাধারণ মানুষের ন্যায় সহজ-সরল জীবনযাপন করেন এবং নিজ হাতে নিজের কাজ সম্পন্ন করেন।
+পরিশেষে বলা যায়, জনাব মানিক তাঁর দায়িত্ব ও ক্ষমতার মাঝেও খুলাফায়ে রাশেদিনের অনাড়ম্বর জীবননীতি ও নিজের কাজ নিজ হাতে করার মহৎ সুন্নাহ চর্চা করেছেন। বর্তমান সমাজের শাসক ও জনপ্রতিনিধিদের অহংকার ত্যাগে এবং জনগণের সত্যিকারের সেবক হতে জনাব মানিকের মাধ্যমে প্রকাশিত খুলাফায়ে রাশেদিনের এই অনুপম জীবন আদর্শ অপরিহার্য ও অনুসরণীয়।`]
+]},
+{table:[`মানুষকে সৃষ্টির সেরা জীব বলা হয়। সুন্দর গঠনও অনন্য। অথচ মাঝে মাঝে এমন আচরণ করে পশুত্বের স্তরে নেমে যায়।`,`মুবিন পাঁচ ওয়াক্ত সালাত আদায় করে না। মাঝে মধ্যে করলেও রুকু-সিজদা ঠিকমতো আদায় করে না। কিন্তু সব জানাযায় সে আবশ্যকীয়ভাবে উপস্থিত হয়।`],
+parts:[
+['হাদিসে কুদসি কাকে বলে?',1,`যে হাদিসের অর্থ, ভাব ও মূলকথা মহান আল্লাহর নিকট থেকে ইলহাম বা স্বপ্নযোগে প্রাপ্ত, কিন্তু রাসুলুল্লাহ (স.) তা নিজের ভাষায় উম্মতের নিকট বর্ণনা করেছেন, তাকে হাদিসে কুদসি বলে।`],
+['“মানুষের সকল কাজের ফলাফল নিয়তের উপর নির্ভরশীল”— ব্যাখ্যা করো।',2,`মানুষের প্রতিটি কাজের প্রতিদান ও সফলতা তার অন্তরের নিয়ত বা উদ্দেশ্যের ওপর নির্ভর করে।
+সহিহ বুখারির প্রথম হাদিসে রাসুলুল্লাহ (স.) নির্দেশ করেছেন যে, মানুষের যাবতীয় কাজের ফলাফল তার নিয়ত অনুসারে নির্ধারিত হয়। কোনো কাজ বাহ্যিকভাবে ভালো মনে হলেও যদি তা লোকদেখানো বা কোনো অসৎ উদ্দেশ্যে করা হয়, তবে আল্লাহর নিকট তা গ্রহণযোগ্য হয় না এবং তার জন্য কোনো সওয়াব মেলে না। পক্ষান্তরে, বিশুদ্ধ নিয়তে আল্লাহর সন্তুষ্টির উদ্দেশ্যে ছোট কাজ করলেও তার জন্য মহান আল্লাহ উত্তম পুরস্কার দান করেন। তাই কাজের গ্রহণযোগ্যতা ও সওয়াব অর্জনের প্রধান শর্ত হলো নিয়তের বিশুদ্ধতা।`],
+['‘ক’ নং ছকের মধ্যে কোন সূরার বক্তব্য প্রতিফলিত হয়েছে? ব্যাখ্যা করো।',3,`‘ক’ নং ছকে পবিত্র কুরআনের সূরা আত-তীনের বক্তব্য প্রতিফলিত হয়েছে।
+সূরা আত-তীনে মহান আল্লাহ মানবজাতির আকৃতি, মর্যাদা ও তাদের পরিণতির বিবরণ দিয়েছেন। আয়াতে বলা হয়েছে— “নিশ্চয়ই আমি মানুষকে সুন্দরতম গঠনে সৃষ্টি করেছি, তারপর আমি তাকে নামিয়ে দিয়েছি সর্বনিম্ন স্তরে।”
+আল্লাহ তাআলা মানুষকে অন্যান্য সমস্ত সৃষ্টির তুলনায় সুন্দর অবয়ব, বিবেক-বুদ্ধি ও শারীরিক গঠনে সর্বশ্রেষ্ঠ করে তৈরি করেছেন। কিন্তু মানুষ যখন তার বিবেক ও সুবুদ্ধি হারিয়ে পাপকর্ম, অন্যায় ও অনাচারে লিপ্ত হয়, তখন সে পশুর চেয়েও অধম ও লাঞ্ছিত হয়ে সর্বনিম্ন স্তরে নেমে যায়।
+উদ্দীপকের 'ক' নং ছকে উল্লেখ করা হয়েছে যে, মানুষকে সৃষ্টির সেরা জীব ও সুন্দর গঠনে সৃষ্টি করা হলেও সে মাঝে মাঝে পশুত্বের স্তরে নেমে যায়। এই বক্তব্যটি সূরা আত-তীনের মূল শিক্ষার সাথে সম্পূর্ণ সংগতিপূর্ণ। মানুষ যদি সৎকর্ম ও ইমানের পথ পরিহার করে পাপাচারের পথ বেছে নেয়, তবে তার মর্যাদা নষ্ট হয় এবং সে ইহকাল ও পরকালে চরম অধঃপতনে পতিত হয়।`],
+['মুবিনের ইবাদত আদায়ের যথার্থতা শরিয়তের আহকামের গুরুত্বের আলোকে মূল্যায়ন করো।',4,`শরিয়তের আহকামের পর্যায়ক্রমিক গুরুত্বের আলোকে মুবিনের ইবাদত আদায়ের পদ্ধতিটি একেবারেই যথার্থ ও গ্রহণযোগ্য নয়।
+ইসলামি শরিয়তে আহকাম বা বিধানগুলোকে পালনীয় গুরুত্বের ভিত্তিতে ফরজ, ওয়াজিব, সুন্নত, মুস্তাহাব ইত্যাদিতে বিভক্ত করা হয়েছে। ফরজ আবার দুই প্রকার: 'ফরজে আইন' ও 'ফরজে কিফায়াহ'। ফরজে আইন হলো সেসব বিধান যা প্রতিটি সামর্থ্যবান মুসলমানকে ব্যক্তিগতভাবে অবশ্যই আদায় করতে হয়; যেমন— দৈনিক পাঁচ ওয়াক্ত সালাত। এটি ত্যাগ করলে চরম কবিরা গুনাহ হয়। আর ফরজে কিফায়াহ হলো এমন ফরজ যা সমাজের কতিপয় লোক আদায় করলে সবাই দায়িত্বমুক্ত হয়; যেমন— জানাজার সালাত। এছাড়া সালাতের রুকু-সিজদায় সঠিক নিয়মে অবস্থান করা হলো সালাতের অপরিহার্য ‘ওয়াজিব’।
+উদ্দীপকের 'খ' নং ছকে দেখা যায়, মুবিন দৈনিক পাঁচ ওয়াক্ত সালাত নিয়মিত আদায় করে না এবং মাঝে মাঝে সালাত আদায় করলেও রুকু-সিজদার ওয়াজিব নিয়মগুলো সঠিকভাবে পালন করে না; কিন্তু সে সমাজের জানাজার সালাতে আবশ্যিকভাবে অংশ নেয়। শরিয়তের দৃষ্টিতে, ব্যক্তিগত বাধ্যবাধকতা অর্থাৎ ফরজে আইন (পাঁচ ওয়াক্ত সালাত) বর্জন করে কেবল সামাজিক আমল বা ফরজে কিফায়াহ (জানাজা) আদায় করা মারাত্মক অপরাধ। তাছাড়া, রুকু-সিজদা ঠিকমতো না করায় তার আদায়কৃত সালাতও ত্রুটিপূর্ণ থেকে যায়, কারণ সালাতের ওয়াজিব বাদ পড়লে সিজদা সাহু দেওয়া অথবা পুনরায় সালাত আদায় করা আবশ্যক হয়।
+সুতরাং, শরিয়তের বিধানের সঠিক ক্রম ও গুরুত্ব অনুধাবন না করে মুবিনের এই ধরনের ইবাদত পালন করা ইসলামের নিয়মকানুন ও মূল শিক্ষার সম্পূর্ণ পরিপন্থী।`]
+]},
+{stim:`পরপর দুবার কন্যা সন্তান হওয়ায় জামিলার স্বামী গনি মিয়া খুবই মনঃক্ষুণ্ণ হয়। সে জামিলার সাথে দুর্ব্যবহার শুরু করে। জামিলার ভাই জসিম একজন সৎসাহসী যুবক। সে সমাজের মানুষকে কল্যাণমূলক কাজের পরামর্শ দেয়। সে তার ভগ্নিপতিকে জামিলার সাথে দুর্ব্যবহার বন্ধের জন্য বলে। জামিলা বলে “আমার ভাইয়ের মতো সবাই যদি এ দায়িত্ব পালন করতো, তবে সমাজের মানুষ ধ্বংস হতে বাঁচতে পারতো।”`,
+parts:[
+['প্রতারণা কাকে বলে?',1,`আসল ও প্রকৃত অবস্থা গোপন রেখে ফাঁকি বা ধোঁকার ওপর ভিত্তি করে নিজ স্বার্থ হাসিল করাকে প্রতারণা বলে।`],
+['সাম্প্রদায়িক সম্প্রীতি প্রয়োজন কেন? ব্যাখ্যা করো।',2,`সমাজে শান্তি-শৃঙ্খলা রক্ষা, মানুষের পারস্পরিক নিরাপত্তাবোধ জোরদার এবং সামাজিক ও জাতীয় উন্নতির জন্য সাম্প্রদায়িক সম্প্রীতি অত্যন্ত প্রয়োজন।
+বিভিন্ন ধর্ম, বর্ণ ও সম্প্রদায়ের মানুষের মধ্যে পারস্পরিক ভালোবাসা, সহমর্মিতা ও সহযোগিতার মনোভাব বজায় রাখাই হলো সাম্প্রদায়িক সম্প্রীতি। সম্প্রীতি না থাকলে সমাজে হিংসা-বিদ্বেষ, মারামারি, হানাহানি ও অরাজকতা ছড়িয়ে পড়ে; যা দেশের স্বাধীনতা ও সার্বভৌমত্বকে হুমকির মুখে ফেলে দেয়। পক্ষান্তরে, সাম্প্রদায়িক সম্প্রীতি বজায় থাকলে সকল নাগরিক নিজ নিজ ধর্ম ও পেশা শান্তিতে পালন করতে পারে এবং দেশ দ্রুত উন্নতির শীর্ষে আরোহণ করে।`],
+['গনি মিয়ার আচরণ কোন সময়ের সামাজিক অবস্থাকে নির্দেশ করে? ব্যাখ্যা করো।',3,`গনি মিয়ার আচরণ প্রাক-ইসলামি যুগের অর্থাৎ 'আইয়ামে জাহিলিয়াত' (অজ্ঞতার যুগ)-এর সামাজিক অবস্থাকে নির্দেশ করে।
+ইসলামের আবির্ভাবের পূর্বে আরব সমাজে চরম বর্বরতা, অজ্ঞতা ও নৈরাজ্য বিরাজ করছিল, যাকে 'আইয়ামে জাহিলিয়াত' বলা হয়। সে যুগে সমাজে নারীর কোনো মর্যাদা বা অধিকার ছিল না। বিশেষ করে পরিবারে কন্যা সন্তান জন্মগ্রহণ করলে তৎকালীন আরবরা তাকে চরম অপমান ও কলঙ্কের বিষয় মনে করত। তাদের মন বিষণ্নতায় কালো হয়ে যেত এবং তারা কন্যা সন্তানকে জ্যান্ত মাটিতে পুঁতে ফেলত অথবা তার প্রতি সীমাহীন অন্যায় ও দুর্ব্যবহার করত।
+উদ্দীপকে বর্ণিত জামিলার স্বামী গনি মিয়া পরপর দুবার কন্যা সন্তান হওয়ায় অত্যন্ত মনঃক্ষুণ্ণ হয় এবং স্ত্রীর সাথে দুর্ব্যবহার শুরু করে। এই দৃষ্টিভঙ্গি ও আচরণ আইয়ামে জাহিলিয়াত যুগের সেই কুসংস্কারাচ্ছন্ন আরব সমাজের নির্দয় আচরণের প্রতিফলন। মহানবি (স.) ইসলাম প্রচারের মাধ্যমে কন্যা সন্তানের মর্যাদা সুপ্রতিষ্ঠিত করেন এবং কন্যাদের সঠিক লালন-পালন ও ভালোবাসার নির্দেশ দেন। অতএব, গনি মিয়ার এই সংকীর্ণ মনোভাব জাহিলি যুগের নিন্দনীয় সমাজ ব্যবস্থারই স্বরূপ প্রকাশ করে।`],
+['জসিমের কাজটি চিহ্নিতপূর্বক তার ব্যাপারে জামিলার মন্তব্যের যথার্থতা মূল্যায়ন করো।',4,`জসিমের কাজটি হলো ইসলামের একটি গুরুত্বপূর্ণ দায়িত্ব ‘সৎকাজের আদেশ ও অসৎকাজে নিষেধ’ (আমর বিল মারুফ ওয়া নাহি আনিল মুনকার), এবং তার বিষয়ে জামিলার বক্তব্যটি সম্পূর্ণ যথার্থ ও যুক্তিযুক্ত।
+ইসলামি জীবনদর্শনে সৎকাজের উপদেশ দেওয়া এবং অন্যায় ও অনাচার থেকে মানুষকে বিরত রাখা অন্যতম শ্রেষ্ঠ ও অপরিহার্য কাজ। মহান আল্লাহ কুরআন মজিদে সৎকাজের নির্দেশদাতা ও অসৎকাজে নিষেধকারীদের মানবজাতির মধ্যে সর্বশ্রেষ্ঠ জাতি হিসেবে আখ্যায়িত করেছেন। সমাজে অন্যায়ের প্রতি রোধ না করা হলে পাপাচার ছড়িয়ে পড়ে এবং গোটা সমাজ ধ্বংসের মুখে পতিত হয়।
+উদ্দীপকে জসিম সমাজের মানুষকে কল্যাণমূলক কাজের পরামর্শ দেয় এবং বোন জামিলার প্রতি ভগ্নিপতির অন্যায্য দুর্ব্যবহারের প্রতিবাদ করে তা বন্ধ করতে বলে। এটি সরাসরি ‘আমর বিল মারুফ ওয়া নাহি আনিল মুনকার’-এর চমৎকার উদাহরণ। এর পরিপ্রেক্ষিতে জামিলা মন্তব্য করে যে, “আমার ভাইয়ের মতো সবাই যদি এ দায়িত্ব পালন করতো, তবে সমাজের মানুষ ধ্বংস হতে বাঁচতে পারতো।”
+জামিলার এই মন্তব্যটি ইসলামি নীতিমালার আলোকে শতভাগ সত্য। মহানবি (স.) একটি হাদিসে জাহাজের যাত্রীদের চমৎকার উদাহরণ দিয়ে সতর্ক করেছেন যে, নিচতলার যাত্রীরা যদি জাহাজের তলায় ছিদ্র করতে চায় এবং উপরতলার লোকেরা তা বন্ধ না করে, তবে সবাই ডুবে ধ্বংস হয়ে যাবে; আর বাধা দিলে সবাই বেঁচে যাবে। ঠিক তেমনি, সমাজের সৎ ও সচেতন মানুষেরা যদি অন্যায়ের প্রতিবাদ ও প্রতিরোধ না করে, তবে সেই সামাজিক পাপাচারের পরিণতিতে সমাজের ভালো-মন্দ নির্বিশেষে সকল মানুষ ধ্বংস ও বিপর্যয়ের মুখোমুখি হয়।
+অতএব, অন্যায় দূর করে শান্তিময় সমাজ গঠনে জসিমের মতো দায়িত্বশীল ভূমিকা পালনের মাধ্যমে যে সমাজ রক্ষা পায়, জামিলার এই অনুধাবন ও মন্তব্য অত্যন্ত সময়োপযোগী ও যথার্থ।`]
+]}
+];
+
+const SQ=[
+['"ইসলাম একটি পূর্ণাঙ্গ জীবন ব্যবস্থা।" - বুঝিয়ে লেখো।',`ইসলাম একটি সর্বজনীন ও পূর্ণাঙ্গ জীবনবিধান। এতে বিশ্বজগতের সৃষ্টি, ধ্বংস, ইহকাল ও পরকালের যাবতীয় প্রয়োজনীয় বিষয় নিখুঁতভাবে বর্ণনা করা হয়েছে। মানবজীবনের প্রতিটি দিক—ব্যক্তিগত, পারিবারিক, সামাজিক, সাংস্কৃতিক, অর্থনৈতিক, রাজনৈতিক ও আন্তর্জাতিক সকল বিষয়ের সম্যক নির্দেশনা ইসলামে বিদ্যমান। মহান আল্লাহ তাআলা বলেন, "আজ আমি তোমাদের জন্য তোমাদের দ্বীনকে পূর্ণাঙ্গ করলাম; আর তোমাদের ওপর আমার নিয়ামতকে সম্পূর্ণ করলাম এবং ইসলামকে তোমাদের জীবনব্যবস্থা হিসেবে মনোনীত করলাম।" (সুরা আল-মায়িদা, আয়াত: ৩)।
+মানুষের জন্ম থেকে মৃত্যু পর্যন্ত সার্বিক কল্যাণ ও সফলতার দিকনির্দেশনা থাকায় ইসলামকে পূর্ণাঙ্গ জীবন ব্যবস্থা বলা হয়।`],
+['"তাওহিদের স্বরূপ" ব্যাখ্যা করো।',`'তাওহিদ' শব্দের অর্থ একত্ববাদ। ইসলামি শরিয়তের পরিভাষায় মহান আল্লাহকে এক ও অদ্বিতীয় সত্তা এবং তাঁর সত্তা ও গুণাবলিতে তুলনাহীন হিসেবে বিশ্বাস ও স্বীকার করে নেওয়াকে তাওহিদ বলে। তাওহিদের মূল স্বরূপ হলো—আল্লাহ তাআলাই আমাদের একমাত্র সৃষ্টিকর্তা, পালনকর্তা, রিজিকদাতা এবং সর্বপ্রকার ইবাদতের একমাত্র যোগ্য সত্তা। তাঁর কোনো শরিক, সমকক্ষ বা সমতুল্য কিছু নেই। আল্লাহ তাআলা বলেন, "কোনো কিছুই তাঁর সদৃশ নয়।" (সুরা আশ-শূরা, আয়াত: ১১)। সত্তা, গুণাবলি ও ইবাদতের ক্ষেত্রে আল্লাহ তাআলার একত্ববাদে অটল বিশ্বাস রাখাই হলো তাওহিদের প্রকৃত স্বরূপ।`],
+['আমরা আল্লাহর রাসুলগণের মধ্যে তারতম্য করি না- বুঝিয়ে লেখো।',`মানবজাতির হিদায়াতের জন্য মহান আল্লাহ তাআলা যুগে যুগে বহু নবী-রাসুল প্রেরণ করেছেন। সকল নবী-রাসুলের প্রচারিত মূল দ্বীন বা আকীদার ভিত্তি ছিল এক ও অভিন্ন—তা হলো তাওহিদ বা আল্লাহর একত্ববাদ। তাঁরা সকলেই ছিলেন মহান আল্লাহর মনোনীত, নিষ্পাপ ও সর্বোচ্চ মর্যাদার অধিকারী বান্দা। ইসলামি আকাইদের নিয়ম অনুযায়ী আল্লাহর প্রেরিত সকল নবী-রাসুলের ওপর সমানভাবে বিশ্বাস স্থাপন করা ফরজ। পবিত্র কুরআনে আল্লাহ তাআলা মুমিনদের পরিচয় দিয়ে বলেন, "তারা বলে, আমরা তাঁর রাসুলগণের মধ্যে কোনো তারতম্য করি না।" (সুরা আল-বাকারাহ, আয়াত: ২৮৫)। অর্থাৎ কোনো নবীকে বিশ্বাস করব আর কাউকে অস্বীকার করব—এমন বৈষম্য না করে সকল রাসুলকে সম্মান ও বিশ্বাস করা ইমানের অপরিহার্য অঙ্গ।`],
+['উসমান (রা.)-এর যুগে কুরআন সংকলনের প্রয়োজনীয়তা কেন দেখা দিয়েছিল? ব্যাখ্যা করো।',`তৃতীয় খলিফা হযরত উসমান (রা.)-এর শাসনকালে ইসলামি সাম্রাজ্য দ্রুত প্রসার লাভ করায় বিপুল সংখ্যক অনারব লোক ইসলাম গ্রহণ করেন। মহানবি (স.) সহজ পঠনের জন্য আরবি ভাষার ৭টি আঞ্চলিক রীতিতে কুরআন তিলাওয়াতের অনুমতি দিয়েছিলেন। কিন্তু অনারব মুসলিমগণ এই ৭টি আঞ্চলিক পাঠরীতির বিষয়ে সচেতন না থাকায় তিলাওয়াত নিয়ে তাঁদের মধ্যে বিভ্রান্তি ও বিতর্কের সৃষ্টি হয়। বিশেষ করে আর্মেনিয়া ও আজারবাইজান অঞ্চলে যুদ্ধরত মুসলিম সৈন্যদের মধ্যে কুরআন পাঠ নিয়ে বাগ্বিতণ্ডা ও বিরোধ দেখা দেয়। এ পরিস্থিতি দেখে সাহাবি হযরত হুযাইফা ইবনুল ইয়ামান (রা.) খলিফাকে অবহিত করলে, কুরআন পাঠের বৈষম্য ও বিভ্রান্তি দূর করে সমগ্র মুসলিম উম্মাহকে একটি প্রমিত পাঠরীতির ওপর ঐক্যবদ্ধ করার উদ্দেশ্যে উসমান (রা.) প্রমিত কপি সংকলনের ঐতিহাসিক উদ্যোগ নেন।`],
+['হাদিসে মাকতু কাকে বলে?',`সনদ বা রাবির পর পর পরম্পরার দিক থেকে হাদিসকে প্রধানত তিন ভাগে ভাগ করা হয়েছে; যথা: মারফু, মাওকুফ ও মাকতু। যে হাদিসের সনদ বা সূত্র কোনো তাবিয়ি পর্যন্ত পৌঁছে শেষ হয়েছে (অর্থাৎ নবিজি বা সাহাবি পর্যন্ত পৌঁছায়নি), তাকে হাদিসে মাকতু বলে। অন্যকথায়, যে হাদিসে কোনো তাবিয়ির বাণী, কর্ম বা মৌন সম্মতির বিবরণ রয়েছে, তাকে হাদিসে মাকতু বলা হয়।`],
+['শরিয়তের বিধি-বিধান অবিভাজ্য- ব্যাখ্যা করো।',`ইসলামি শরিয়ত হলো মহান আল্লাহ ও তাঁর রাসুল (স.) কর্তৃক প্রবর্তিত জীবন পরিচালনার সার্বিক ও পূর্ণাঙ্গ আইন-কানুন। শরিয়তের আনুগত্যের মধ্যেই দুনিয়া ও আখেরাতের সার্বিক সাফল্য নিহিত। শরিয়তের বিধানাবলী অবিভাজ্য—এর অর্থ হলো শরিয়তের সকল আদেশ-নিষেধ পূর্ণাঙ্গভাবে মেনে চলতে হবে। এর কিছু অংশ মানা আর কিছু অংশ না মানা মারাত্মক অপরাধ এবং তা কুফরির শামিল। এ বিষয়ে আল্লাহ তাআলা ধমক দিয়ে বলেন, "তবে কি তোমরা কিতাবের কিছু অংশ বিশ্বাস কর, আর কিছু অংশ প্রত্যাখ্যান কর?..." (সুরা আল-বাকারাহ, আয়াত: ৮৫)। সুতরাং শরিয়তকে খণ্ডিত করার কোনো সুযোগ নেই, এর সকল বিধান অবিভাজ্যভাবে পালনীয়।`],
+['হজ ফরজ হওয়ার শর্তাবলি ব্যাখ্যা করো।',`হজ ইসলামের পঞ্চম রুকন। পবিত্র মক্কায় বায়তুল্লাহ ও সংশ্লিষ্ট স্থানসমূহ যিয়ারত করে নির্দিষ্ট দিনসমূহে নির্ধারিত নিয়মে ইবাদত সম্পন্ন করাকে হজ বলে। যার শারীরিক ও আর্থিক সামর্থ্য রয়েছে, তার জীবনে একবার হজ আদায় করা ফরজ।
+হজ ফরজ হওয়ার প্রধান শর্তাবলি হলো:
+1. মুসলিম হওয়া: অমুসলিমের ওপর হজ ফরজ নয়।
+2. বিবেকবান হওয়া: পাগল বা মানসিক ভারসাম্যহীন ব্যক্তির ওপর হজ ফরজ নয়।
+3. বালেগ বা বয়োপ্রাপ্ত হওয়া: অপ্রাপ্তবয়স্কদের ওপর হজ ফরজ নয়।
+4. স্বাধীন হওয়া: পরাধীন ব্যক্তির ওপর হজ ফরজ নয়।
+5. আর্থিক সামর্থ্য থাকা: পরিবার-পরিজনের প্রয়োজনীয় ব্যয় মেটানোর পর মক্কায় যাওয়া-আসা ও অবস্থানের পথখরচ থাকার সামর্থ্য থাকা।
+6. শারীরিক সুস্থতা ও সফর নিরাপদ হওয়া: সফরে যাওয়ার শারীরিক শক্তি থাকা এবং যাতায়াতের পথ নিরাপদ হওয়া।`],
+['কেন আমরা হাক্কুল ইবাদ সম্পাদনে যত্নবান হবো?',`'হাক্কুল ইবাদ' অর্থ বান্দার হক বা মানুষের অধিকার। মানুষ সামাজিক জীব হওয়ায় পরিবার ও সমাজে একে অপরের প্রতি অনেক দায়িত্ব ও অধিকার তৈরি হয়। আমরা হাক্কুল ইবাদ আদায়ে যত্নবান হবো কারণ:
+1. আল্লাহর ক্ষমা না পাওয়া: আল্লাহ তাআলা নিজের অধিকার (হাক্কুল্লাহ)-এর ভুলত্রুটি নিজ দয়ায় ক্ষমা করতে পারেন, কিন্তু বান্দার হকের লঙ্ঘন বা ক্ষতি সাধন করলে সংশ্লিষ্ট বান্দা ক্ষমা না করা পর্যন্ত আল্লাহ তা ক্ষমা করবেন না।
+2. সামাজিক শান্তি ও সৌহার্দ্য: হাক্কুল ইবাদ সম্পাদনের মাধ্যমে সমাজে ভালোবাসা, সাহায্য-সহযোগিতা ও শান্তি প্রতিষ্ঠিত হয়।
+3. আল্লাহর সন্তুষ্টি অর্জন: রাসুল (স.) বলেছেন, যে ব্যক্তি তার অপর ভাইয়ের প্রয়োজন পূরণে সচেষ্ট হয়, আল্লাহ তার প্রয়োজন পূরণ করে দেন। তাই আখিরাতে নাজাত লাভ ও সমাজে সুন্দর পরিবেশ গড়তে আমাদের হাক্কুল ইবাদে যত্নবান হতে হবে।`],
+['জিহাদ কেন প্রয়োজন?',`'জিহাদ' শব্দের অর্থ পরিশ্রম, সাধনা, কষ্ট বা চেষ্টা করা। ইসলামি পরিভাষায় সত্য ও ন্যায় প্রতিষ্ঠার মাধ্যমে আল্লাহর দ্বীনকে সমুন্নত রাখার জন্য সার্বিক চেষ্টা চালানোকে জিহাদ বলে।
+জিহাদ প্রয়োজন হওয়ার মূল কারণসমূহ হলো:
+1. নফসকে নিয়ন্ত্রণ করা: কুপ্রবৃত্তি ও শয়তানের প্ররোচনা থেকে নিজেকে মুক্ত রেখে আল্লাহর অনুগত থাকার জন্য (জিহাদে আকবার)।
+2. সত্য ও ইনসাফ প্রতিষ্ঠা: সমাজ থেকে জুলুম, নির্যাতন ও অসত্য দূর করে ন্যায়বিচার প্রতিষ্ঠা করা।
+3. ফিতনা-ফাসাদ দূর করা: সমাজে অরাজকতা, সন্ত্রাস ও বিশৃঙ্খলা দূর করে শান্তি প্রতিষ্ঠা করা।
+4. ইসলামের সুরক্ষা: দ্বীনকে রক্ষা করা এবং মহান আল্লাহর সন্তুষ্টি অর্জন করা।`],
+['আখলাকে হামিদাহ কাকে বলা হয়?',`'আখলাক' শব্দের অর্থ চরিত্র বা স্বভাব এবং 'হামিদাহ' শব্দের অর্থ প্রশংসনীয়। ইসলামি পরিভাষায় যেসব স্বভাব ও চরিত্র সমাজে প্রশংসনীয় ও সমাদৃত এবং আল্লাহ তাআলা ও তাঁর রাসুল (স.)-এর নিকট অত্যন্ত প্রিয়, সেসব স্বভাব-চরিত্রকে আখলাকে হামিদাহ (প্রশংসনীয় চরিত্র বা সৎচরিত্র) বলা হয়। মানব চরিত্রের সকল সুন্দর, নির্মল ও মার্জিত গুণাবলি—যেমন সততা, সত্যবাদিতা, ওয়াদা পালন, আমানতদারি, শালীনতা, পরিচ্ছন্নতা, দেশপ্রেম ও মানবসেবা ইত্যাদি আখলাকে হামিদাহ-এর অন্তর্ভুক্ত।`],
+['"নাহি আনিল মুনকার" সম্পর্কে বুঝিয়ে লেখো।',`'নাহি আনিল মুনকার' অর্থ অসৎকাজে নিষেধ করা বা বাধা দেওয়া। ইসলামি জীবনদর্শনে যাবতীয় মন্দ, অনৈতিক, অশ্লীল ও শরিয়তবিরোধী কাজ থেকে মানুষকে বিরত রাখাকে নাহি আনিল মুনকার বলে।
+মহানবি (স.) অসৎকাজ প্রতিরোধের পদ্ধতি সম্পর্কে বলেছেন—কেউ কোনো খারাপ কাজ হতে দেখলে সে যেন প্রথমে হাত দিয়ে (শক্তি/ক্ষমতা দ্বারা) তা প্রতিরোধ করে; তা না পারলে মুখ দিয়ে (কথা বা উপদেশ দ্বারা) নিষেধ করবে; আর তাও না পারলে অন্তরে সেটিকে ঘৃণা করবে, যা ইমানের দুর্বলতম স্তর। সমাজকে ধ্বংস ও আল্লাহর শাস্তি থেকে রক্ষা করতে এবং সৎকাজের প্রসার ঘটাতে নাহি আনিল মুনকার অত্যন্ত গুরুত্বপূর্ণ একটি ধর্মীয় ও সামাজিক দায়িত্ব।`],
+['পবিত্রতা ইমানের অর্ধেক কীভাবে? বুঝিয়ে লেখো।',`মহানবি হযরত মুহাম্মদ (স.) এরশাদ করেছেন—"পবিত্রতা ইমানের অর্ধেক।" (সহিহ মুসলিম)।
+এর তাৎপর্য হলো:
+1. ইমান মানুষের অন্তরকে শিরক, কুফর, রিয়া, হিংসা ও যাবতীয় আত্মিক কলুষতা থেকে মুক্ত ও পবিত্র করে তোলে।
+2. অপরপক্ষে, দৈহিক ও বাহ্যিক পবিত্রতা (যেমন—অজু, গোসল, পোশাক-পরিচ্ছদ ও পরিবেশের পরিচ্ছন্নতা) ইবাদত কবুল হওয়ার অপরিহার্য পূর্বশর্ত। শরীর ও পোশাক পবিত্র না থাকলে সালাতসহ মূল ইবাদতসমূহ আদায় হয় না।
+অতএব, আকিদা ও বিশ্বাসের মাধ্যমে আত্মার পবিত্রতা যেমন প্রয়োজন, ঠিক তেমনি বাহ্যিক দেহের পরিচ্ছন্নতাও সমান জরুরি; এ দুইয়ের সমন্বয়েই ইমান পূর্ণতা পায় বলেই পবিত্রতাকে ইমানের অর্ধেক বলা হয়েছে।`],
+['মহানবি (স.)-কে হিজরত করতে হয়েছিল কেন?',`মহানবি (স.) মক্কায় প্রকাশ্যে ইসলামের দাওয়াত দেওয়া শুরু করলে কুরাইশ কাফিররা তাঁর ওপর চরম অত্যাচার-নির্যাতন শুরু করে। তারা নবিজি (স.)-কে ইসলাম প্রচার থেকে বিরত রাখতে ব্যর্থ হয়ে শেষ পর্যন্ত তাঁকে চিরতরে হত্যা করার সিদ্ধান্ত নেয়। এমতাবস্থায় ইসলামকে রক্ষা করা, দাওয়াতের কাজকে নিরবচ্ছিন্ন রাখা এবং মদিনার নবাগত মুসলিমদের সুসংগঠিত করার উদ্দেশ্যে মহান আল্লাহর প্রত্যক্ষ নির্দেশে ৬২২ খ্রিস্টাব্দে মহানবি (স.) নিজের প্রিয় জন্মভূমি মক্কা ছেড়ে মদিনায় হিজরত করতে বাধ্য হন।`],
+['উসমান (রা.)-কে কেন গনি বলা হতো? বুঝিয়ে লেখো।',`'গনি' একটি আরবি শব্দ, যার অর্থ ধনী, বিত্তবান বা সামর্থ্যবান। হযরত উসমান (রা.) ছিলেন আরবের একজন অত্যন্ত ধনী ব্যবসায়ী। তবে তিনি তাঁর উপার্জিত ধন-সম্পদ ভোগ-বিলাসে ব্যয় না করে ইসলাম ও মানবসেবায় অকাতরে দান করতেন।
+যেমন—মদিনাবাসীর পানীয় জলের কষ্ট দূর করতে ১৮,০০০ দিনার দিয়ে 'বি'র-ই-রুমা' নামক কূপ কিনে ওয়াকফ করা, দুর্ভিক্ষের সময় খাদ্যত্রাণ বিতরণ, নিজ খরচে মসজিদে নববি সম্প্রসারণ এবং তাবুক যুদ্ধে ১,০০০ উট, ৭০টি ঘোড়া ও প্রচুর দিনার দান করা ইত্যাদি। অঢেল ধন-সম্পদ থাকা এবং তা আল্লাহর পথে অকাতরে বিলিয়ে দেওয়ার কারণে তাঁকে 'গনি' (দানবীর/বিত্তবান) উপাধিতে ভূষিত করা হয়।`],
+['নাসির উদ্দিন তুসি কে? সংক্ষেপে তার পরিচয় দাও।',`খাজা নাসির উদ্দিন তুসি (১২০১–১২৭৪ খ্রিস্টাব্দ) ছিলেন মধ্যযুগের একজন বিশ্ববিখ্যাত মুসলিম পারসিয়ান বিজ্ঞানী, গণিতবিদ, জ্যোতির্বিজ্ঞানী, দার্শনিক ও প্রখ্যাত পণ্ডিত।
+• অবদান: তিনি ত্রিকোণমিতিকে গণিতের একটি স্বতন্ত্র ও স্বাধীন শাখা হিসেবে প্রতিষ্ঠা করেন।
+• জ্যোতির্বিজ্ঞান: তিনি বিখ্যাত 'মারাগা পর্যবেক্ষণাগার' পরিচালনা করেন এবং 'তুসিকাপল' নামক জ্যোতির্বিজ্ঞান তত্ত্ব উদ্ভাবন করেন, যা পরবর্তীতে আধুনিক জ্যোতির্বিজ্ঞানের বিকাশে ভূমিকা রাখে।
+• গ্রন্থাবলী: তিনি গণিত, জ্যোতির্বিজ্ঞান ও নৈতিকতার ওপর বহু বিখ্যাত গ্রন্থ (যেমন: আখলাক-ই নাসিরি) রচনা করেন।`]
+];
+
+/* MCQ: [question, [ক,খ,গ,ঘ], correctIndex] */
+const MCQ=[
+['কোন সূরায় মহান আল্লাহ তা\'আলার একত্ববাদের বর্ণনা রয়েছে?',['আত-তীন','আল-ইখলাস','আল-মাউন','আল-কাফিরুন'],1],
+['"?" চিহ্নিত স্থানে কী বসবে?',['সালাত','সাওম','ইমান','যাকাত'],2],
+['ছক চিহ্নের মূল বিষয়ের সাথে ইসলামের সম্পর্ক হলো—\ni. গাছের মূল ও শাখা-প্রশাখার ন্যায়\nii. একে অপরের বিপরীত\niii. একে অপরের পরিপূরক\nনিচের কোনটি সঠিক?',['i ও ii','i ও iii','ii ও iii','i, ii ও iii'],1],
+['জাহান্নামে কারা চিরকাল থাকবে?',['মিথ্যুক','সুদখোর','ফাসিক','কাফির'],3],
+['সালাতের জন্য আযান দেওয়া কী?',['নফল','ফরজ','সুন্নত','ওয়াজিব'],2],
+['জানাযার সালাত আদায় করা কী?',['ফরজে আইন','ফরজে কিফায়া','সুন্নত','মুস্তাহাব'],1],
+['সর্বপ্রথম লিখিত হাদিসের বিশুদ্ধ সংকলন গ্রন্থ কোনটি?',['বুখারি শরিফ','মুসলিম শরিফ','নাসায়ি শরিফ','আল-মুয়াত্তা'],3],
+['অপরের অসাক্ষাতে তার দোষ প্রকাশ করাকে কী বলে?',['পরশ্রীকাতরতা','হিংসা','ঘৃণা','গিবত'],3],
+['হরতালের সময় পাবলিক বাস ভাঙচুরকারী—',['ফাসিক','মুনাফিক','কাফির','মুশরিক'],0],
+["'মুজামুল বুলদান' কোন শাস্ত্রের গ্রন্থ?",['ভূগোল','চিকিৎসা','রসায়ন','গণিত'],0],
+['হাদিসকে আল-কুরআনের পরিপূরক হিসেবে বিবেচনা করা হয়। কারণ—\ni. এতে আল-কুরআনের বিধি-বিধানের ব্যাখ্যা বিদ্যমান\nii. এতে রাসুল (স.)-এর হাতে-কলমে শিক্ষা দানের বর্ণনা রয়েছে\niii. এতে আধ্যাত্মিক পরিচ্ছন্নতার নির্দেশনা রয়েছে\nনিচের কোনটি সঠিক?',['i ও ii','i ও iii','ii ও iii','i, ii ও iii'],0],
+["'যুন্নুরাইন' কার উপাধি?",['আবুবকর (রা.)','উমর (রা.)','উসমান (রা.)','আলী (রা.)'],2],
+['অসুস্থতার কারণে জনাব আসাদ ৯ জিলহজ্জ মুজদালিফায় অবস্থান করতে পারেননি। তিনি হজের কোন বিধানটি পরিত্যাগ করেন?',['ফরজ','ওয়াজিব','সুন্নাহ','মুস্তাহাব'],1],
+['বিদায় হজের সময় মহানবি (স.) ও সাহাবিগণ কোথায় এসে ইহরাম বাঁধেন?',['হুদায়বিয়ায়','জেদ্দায়','যুল হুলাইফায়','ইয়ালামলামে'],2],
+['নিচের কোনটি মাদানি সূরার বৈশিষ্ট্য?',['শব্দমালা শক্তিশালী, ভাবগম্ভীর','শরিয়তের বিধি-বিধান আছে','শিরক ও কুফরের পরিচয় বর্ণনা আছে','তাওহিদ ও রিসালাতের বর্ণনা আছে'],1],
+['দৈনিক পাঁচ ওয়াক্ত সালাত আদায় করা কোন ধরনের আহকাম?',['ফরজে কিফায়াহ','ফরজে আইন','সুন্নতে মুয়াক্কাদাহ','সুন্নতে যায়েদাহ্'],1],
+['আল্লাহ তায়ালা ও রাসুল (স.)-এর আনুগত্য করাকে কী বলে?',['ইসলাম','তাওহিদ','রিসালাত','ইমান'],0],
+['নবি-রাসুলগণের দায়িত্বের নাম কী?',['সিরাত','রিসালাত','হাশর','মিজান'],1],
+['কুরআন অর্থ কী?',['জ্যোতি','সত্য','পঠিত','উপদেশ'],2],
+['আনিসার নিকট তার প্রতিবেশী হাফসা মাছ কাটার জন্য বটি ধার চাইলে আনিসা তা দিতে অস্বীকার করে। তার স্বামী নয়ন সাধারণত বাড়িতে নামাজ আদায় করে। মসজিদ পরিচালনা কমিটি গঠনের কয়েকদিন আগে থেকে জামাআতে নামাজ পড়ে ও কমিটির সদস্য পদপ্রার্থী হয়।\n\nআনিসার কর্মকাণ্ডে কোন সূরার শিক্ষা লঙ্ঘিত হয়েছে?',['আল-ইনশিরাহ','আল-মাউন','আদ-দুহা','আত-তীন'],1],
+['নয়নের আচরণের ফলে সে ভোগ করবে—\ni. দুনিয়ায় দুর্ভোগ\nii. আল্লাহর অসন্তুষ্টি\niii. পরকালীন শাস্তি\nনিচের কোনটি সঠিক?',['i ও ii','ii ও iii','i ও iii','i, ii ও iii'],3],
+['কুরআন লিপিবদ্ধকারী সাহাবিগণের মধ্যে প্রধান কে ছিলেন?',['হযরত উসমান (রা.)','হযরত আলী (রা.)','হযরত আমর ইবনে আস (রা.)','হযরত যায়েদ ইবনে সাবিত (রা.)'],3],
+['নিফাক অর্থ কী?',['পরনিন্দা','হিংসা','কপটতা','অবাধ্যতা'],2],
+['হাসিব মনে করে, এই পৃথিবীর জীবনই একমাত্র জীবন। মৃত্যুর পরে মানুষ মাটির সাথে মিশে যাবে। তাকে আর কোনোদিন জীবিত করা হবে না। তার এ ধারণা কীসের শামিল?',['নিফাক','কুফর','শিরক','ফিতনা'],1],
+['সনদের ভিত্তিতে হাদিস কত প্রকার?',['তিন','চার','পাঁচ','ফিতনা'],0],
+['সকল মানুষ আদম (আ.)-এর বংশধর। এর দ্বারা কী বোঝানো হয়েছে?',['একই কালিমায় বিশ্বাসীগণ ভাই ভাই','একই পিতা-মাতা থেকে জন্মগ্রহণকারী পরস্পর ভাই ভাই','ধর্ম-বর্ণ নির্বিশেষে সকল মানুষ ভাই ভাই','একই অঞ্চলে বসবাসকারী মানুষ পরস্পর ভাই ভাই'],2],
+['মুসলিম বাহিনী কত খ্রিস্টাব্দে মক্কা বিজয় করেছিল?',['৬২৮ খ্রি:','৬৩২ খ্রি:','৬২৬ খ্রি:','৬৩০ খ্রি:'],3],
+['একজন অধীনস্থ কর্মচারীকে দৈনিক কতবার ক্ষমা করা যেতে পারে?',['চল্লিশ বার','পঞ্চাশ বার','সত্তর বার','একশত বার'],2],
+['তাজকিয়াতুল নফস অর্জনের উপায় হলো—\ni. তাকওয়া ও ইস্তিগফার\nii. তাকওয়া ও যুহুদ\niii. ইখলাস ও সবর\nনিচের কোনটি সঠিক?',['i ও ii','i ও iii','ii ও iii','i, ii ও iii'],3],
+['"আর তাদের কাজকর্ম সম্পাদিত হয় পারস্পরিক পরামর্শের ভিত্তিতে"—উক্তিটি কীসের গুরুত্ব বহন করে?',['হাদিসের','কিয়াসের','ইজমার','কুরআনের'],2]
+];
+/* questions shown in vertical (PDF-style) option layout (1-based) */
+const LISTQ=new Set([7,15,16,19,20,22,26]);
+const GROUPS={
+ 1:{head:'নিচের ছকটি পড়ে ২ ও ৩ নং প্রশ্নের উত্তর দাও:',html:`<svg viewBox="0 0 520 250" style="width:100%;max-width:520px;display:block;margin:0 auto" role="img" aria-label="ছক">
+ <g stroke="var(--acc)" stroke-width="3" fill="none" stroke-linecap="round"><path d="M260 64 L85 176"/><path d="M260 64 L260 176"/><path d="M260 64 L435 176"/></g>
+ <g fill="var(--acc)"><rect x="205" y="10" width="110" height="56" rx="18"/></g>
+ <text x="260" y="48" text-anchor="middle" font-size="34" font-weight="700" fill="var(--ink)">?</text>
+ <g fill="var(--card2)" stroke="var(--acc)" stroke-width="2.5"><rect x="10" y="176" width="150" height="58" rx="18"/><rect x="185" y="176" width="150" height="58" rx="18"/><rect x="360" y="176" width="150" height="58" rx="18"/></g>
+ <g fill="var(--tx)" font-size="17" font-weight="600" text-anchor="middle" font-family="inherit"><text x="85" y="211">আন্তরিক বিশ্বাস</text><text x="260" y="211">মৌখিক স্বীকৃতি</text><text x="435" y="211">বাস্তব আমল</text></g></svg>`,cls:''},
+ 19:{head:'নিচের অনুচ্ছেদটি পড়ে ২০ ও ২১ নং প্রশ্নের উত্তর দাও:',html:`<p style="margin:0">আনিসার নিকট তার প্রতিবেশী হাফসা মাছ কাটার জন্য বটি ধার চাইলে আনিসা তা দিতে অস্বীকার করে। তার স্বামী নয়ন সাধারণত বাড়িতে নামাজ আদায় করে। মসজিদ পরিচালনা কমিটি গঠনের কয়েকদিন আগে থেকে জামাআতে নামাজ পড়ে ও কমিটির সদস্য পদপ্রার্থী হয়।</p>`,cls:'passage'}
+};
+/* the passage already inside Q20 text -> trim duplicate */
+MCQ[19][0]='আনিসার কর্মকাণ্ডে কোন সূরার শিক্ষা লঙ্ঘিত হয়েছে?';
+MCQ[1][0]='"?" চিহ্নিত স্থানে কী বসবে?';
+
+/* ============ HELPERS ============ */
+const $=s=>document.querySelector(s);
+const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
+const BNL=['ক','খ','গ','ঘ','ঙ','চ','ছ','জ','ঝ','ঞ','ট','ঠ','ড','ঢ','ণ'];
+const KEY='islam_study_hub_v2';
+let DB=null;
+try{DB=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!DB){try{const o=JSON.parse(localStorage.getItem('islam_study_hub_v1'));if(o&&o.hist)DB=o}catch(e){}}
+if(!DB||!DB.hist)DB={theme:'light',acc:{},hist:{}};
+if(!DB.v2){DB.theme='light';DB.v2=1}
+DB.acc=DB.acc||{};
+USERS.forEach(u=>{DB.acc[u.id]=DB.acc[u.id]||u.def;DB.hist[u.id]=DB.hist[u.id]||[]});
+const persistLocal=()=>{try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){}};
+const cloudOn=()=>!!(window.cloud&&window.cloud.ready);
+/* kind: 'set' = theme+colors (shared by all users), 'hist' = one user's exam history */
+const save=(kind,uid)=>{persistLocal();if(!cloudOn())return;
+ if(kind==='set')cloud.saveSettings({theme:DB.theme,acc:DB.acc});
+ if(kind==='hist')cloud.saveHist(uid,DB.hist[uid]);};
+const snap=()=>JSON.stringify([DB.theme,DB.acc,DB.hist]);
+function softRender(before){
+ if(snap()===before)return;persistLocal();applyTheme();
+ if(E||S.view==='exam'||S.view==='result'||$('#modal-root').innerHTML)return;
+ if(S.view==='settings'){if(!settingsDirty())refreshSettings();return}
+ render();
+}
+window.onCloudSettings=function(d){
+ const b=snap();
+ if(d){if(d.theme)DB.theme=d.theme;if(d.acc)USERS.forEach(u=>{if(d.acc[u.id])DB.acc[u.id]=d.acc[u.id]})}
+ else if(window.cloud)cloud.saveSettings({theme:DB.theme,acc:DB.acc});
+ softRender(b);
+};
+window.onCloudHist=function(uid,list){
+ const b=snap();
+ if(Array.isArray(list))DB.hist[uid]=list;
+ else if(DB.hist[uid].length&&window.cloud)cloud.saveHist(uid,DB.hist[uid]);
+ softRender(b);
+};
+const U=id=>USERS.find(u=>u.id===id);
+let S={user:null,view:'home',sel:null,sub:null};
+try{const s=sessionStorage.getItem('islam_user');if(s&&U(s))S.user=U(s)}catch(e){}
+let E=null,timer=null,raf=0,R=null,HU=null,SETU='nadim',SETH='nadim',PEND={},PENDT=null;
+
+/* icons */
+const IC={
+ home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/>',
+ back:'<path d="M15 5l-7 7 7 7"/>',
+ out:'<path d="M9 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h4"/><path d="M16 8l4 4-4 4M20 12H9"/>',
+ set:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+ eye:'<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/>',
+ eyeoff:'<path d="M17.9 17.9A10.9 10.9 0 0 1 12 19c-7 0-11-7-11-7a19.8 19.8 0 0 1 5.1-5.9M9.9 4.2A10.7 10.7 0 0 1 12 4c7 0 11 8 11 8a19.5 19.5 0 0 1-2.2 3.2M1 1l22 22"/>',
+ trophy:'<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
+ retake:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>',
+ del:'<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 10v7M14 10v7"/>',
+ view:'<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/>',
+ check:'<path d="M5 12l5 5L20 7"/>',
+ x:'<path d="M6 6l12 12M18 6L6 18"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ go:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+ list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
+ sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+ moon:'<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
+ pen:'<path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+ eyeq:'<path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="2.5"/>'
+};
+const C={home:'#3b82f6',set:'#8b5cf6',out:'#ef4444',back:'#10b981',retake:'#f59e0b',del:'#ef4444',view:'#3b82f6'};
+const ic=(n,s=20)=>`<svg viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${IC[n]}</svg>`;
+const icb=(n,c,fn,t,cls='')=>`<button class="icb ${cls}" style="--c:${c}" onclick="${fn}" title="${t}" aria-label="${t}">${ic(n,cls==='sm'?16:20)}</button>`;
+
+const imgUrls=id=>[`https://drive.google.com/thumbnail?id=${id}&sz=w500`,`https://lh3.googleusercontent.com/d/${id}=w500`,`https://drive.google.com/uc?export=view&id=${id}`];
+function av(u,size,ring){return `<span class="av" style="--s:${size};--ring:${ring||DB.acc[u.id]}"><b>${u.en[0]}</b><img alt="" referrerpolicy="no-referrer" src="${imgUrls(u.img)[0]}" data-u="${u.id}" data-i="0" onerror="imgErr(this)"></span>`}
+function imgErr(im){const u=U(im.dataset.u),i=+im.dataset.i+1,l=imgUrls(u.img);if(i<l.length){im.dataset.i=i;im.src=l[i]}else im.remove()}
+function inkOf(hex){const n=parseInt(hex.slice(1),16),r=n>>16,g=(n>>8)&255,b=n&255;return (0.299*r+0.587*g+0.114*b)>140?'#0b1d17':'#ffffff'}
+function applyTheme(){
+ document.documentElement.dataset.theme=DB.theme;
+ const c=S.user?DB.acc[S.user.id]:'#3ddc97';
+ const r=document.documentElement.style;r.setProperty('--acc',c);r.setProperty('--ink',inkOf(c));
+}
+function toast(t){const d=document.createElement('div');d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
+const fmtClock=s=>`${bn(String(Math.floor(s/60)).padStart(2,'0'))}:${bn(String(s%60).padStart(2,'0'))}`;
+const fmtDur=s=>`${bn(Math.floor(s/60))} মিনিট ${bn(s%60)} সেকেন্ড`;
+const fmtDate=ts=>new Date(ts).toLocaleDateString('bn-BD',{day:'numeric',month:'long',year:'numeric'});
+const fmtTime=ts=>new Date(ts).toLocaleTimeString('bn-BD',{hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true});
+const fmtDay=ts=>new Date(ts).toLocaleDateString('bn-BD',{weekday:'long'});
+function paras(t){return t.split('\n').map(l=>{if(/^\d\. .*:/.test(l)){const i=l.indexOf(':');return `<p><strong>${l.slice(0,i+1)}</strong>${l.slice(i+1)}</p>`}return `<p>${l}</p>`}).join('')}
+
+/* ============ MODAL ============ */
+function openModal(html,o={}){
+ $('#modal-root').innerHTML=`<div class="backdrop ${o.wide?'wide':''}" onmousedown="if(event.target===this&&!${!!o.lock})closeModal()"><div class="pop-box" id="mbox" style="${o.style||''}">${o.lock?'':`<button class="xb" onclick="closeModal()">${ic('x',16)}</button>`}${html}</div></div>`;
+}
+function closeModal(){$('#modal-root').innerHTML=''}
+
+/* ============ LOGIN ============ */
+function loginHTML(){
+ return `<div class="login page"><div class="ttl"><div class="para"><span>ইসলাম শিক্ষা</span></div><br><div class="para sm"><span>তোমার ছবিতে ট্যাপ করো...</span></div></div>
+ <div class="mid"><div class="tri"><button class="pick" onclick="askPass('nadim')" aria-label="user">${av(USERS[0],'var(--sz)')}</button>
+ <div class="r2"><button class="pick" onclick="askPass('rana')" aria-label="user">${av(USERS[1],'var(--sz)')}</button><button class="pick" onclick="askPass('roman')" aria-label="user">${av(USERS[2],'var(--sz)')}</button></div></div></div></div>`;
+}
+function askPass(id){
+ const u=U(id),c=DB.acc[id];
+ openModal(`${av(u,'104px')}<h2>Welcome ${u.bn}</h2>
+ <div class="pw"><input id="pw" type="password" placeholder="পাসওয়ার্ড লেখো" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" onkeydown="if(event.key==='Enter')tryLogin('${id}')" oninput="const e=$('#perr');e.className='err';e.textContent=''"><button class="eye" id="eye" onclick="togglePw()" title="দেখাও / লুকাও">${ic('eye',22)}</button></div>
+ <div class="err" id="perr"></div>
+ <button class="btn lg" onclick="tryLogin('${id}')">Let's Go ${ic('go',18)}</button>`,{style:`--acc:${c};--ink:${inkOf(c)}`});
+ setTimeout(()=>{const p=$('#pw');p&&p.focus()},250);
+}
+function togglePw(){const p=$('#pw');p.type=p.type==='password'?'text':'password';$('#eye').innerHTML=ic(p.type==='password'?'eye':'eyeoff',22);p.focus()}
+function tryLogin(id){
+ const u=U(id),v=$('#pw').value;
+ if(v!==u.pass){
+  const b=$('#mbox');b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake');
+  const e=$('#perr');e.className='err';e.textContent='পাসওয়ার্ড ভুল!';return;
+ }
+ S.user=u;S.view='home';S.sel=null;S.sub=null;
+ try{sessionStorage.setItem('islam_user',u.id)}catch(e){}
+ closeModal();render();
+}
+function doLogout(){const a=$('#app');a.classList.add('out');setTimeout(()=>{logout();a.classList.remove('out')},320)}
+function logout(){S.user=null;try{sessionStorage.removeItem('islam_user')}catch(e){};clearInterval(timer);cancelAnimationFrame(raf);E=null;closeModal();render()}
+function goHome(){PEND={};PENDT=null;S.view='home';S.sel=null;S.sub=null;E=null;render()}
+
+/* ============ RENDER ============ */
+function render(){
+ if(S.view!=='exam'){clearInterval(timer);cancelAnimationFrame(raf)}
+ applyTheme();
+ const app=$('#app');
+ if(!S.user){app.innerHTML=loginHTML();window.scrollTo({top:0});return}
+ const v=S.view;
+ if(v==='home')app.innerHTML=homeHTML();
+ else if(v==='mcqans')app.innerHTML=mcqAnsHTML();
+ else if(v==='exam')return;
+ else if(v==='result')app.innerHTML=resultHTML();
+ else if(v==='lb')app.innerHTML=lbHTML();
+ else if(v==='hist')app.innerHTML=histHTML();
+ else if(v==='settings')app.innerHTML=settingsHTML(true);
+ window.scrollTo({top:0});
+}
+function topbar(left=''){
+ const gear=S.user.admin&&S.view!=='settings'?icb('set',C.set,"S.view='settings';render()",'সেটিংস'):'';
+ return `<div class="top"><div class="tl">${left}</div><div class="tr">${gear}${S.view==='home'?icb('out',C.out,'doLogout()','লগআউট'):''}</div></div>`;
+}
+const homeBtn=()=>icb('home',C.home,'goHome()','হোম');
+function homeHTML(){
+ const stack=USERS.map(u=>av(u,'60px')).join('');
+ return `<div class="wrap page">${topbar(`<span class="pill">${av(S.user,'34px')}${S.user.bn}</span>`)}
+ <header class="banner"><div class="stack">${stack}</div><h1>বন্ধুদের লিডারবোর্ড</h1><p>ইসলাম শিক্ষা • একসাথে পড়ি, একসাথে জিতি</p><button class="lbbtn" onclick="S.view='lb';render()">${ic('trophy',18)} লিডারবোর্ড</button></header>
+ <section class="picker"><div class="row2">
+  <button class="big ${S.sel==='cqsq'?'on':''}" onclick="pickSel('cqsq')">CQ &amp; SQ</button>
+  <button class="big ${S.sel==='mcq'?'on':''}" onclick="pickSel('mcq')">MCQ</button></div>
+  ${S.sel==='cqsq'?`<div class="row2 sub pop"><button class="big ${S.sub==='cq'?'on':''}" onclick="pickSub('cq')">CQ</button><button class="big ${S.sub==='sq'?'on':''}" onclick="pickSub('sq')">SQ</button></div>`:''}
+ </section>
+ <section id="content">${S.sub==='cq'?cqHTML():S.sub==='sq'?sqHTML():''}</section></div>`;
+}
+function pickSel(s){
+ S.sel=s;S.sub=null;render();
+ if(s==='mcq')openModal(`<h2>MCQ</h2><p style="color:var(--mu);margin:0 0 16px">কী করতে চাও?</p>
+ <div class="btns" style="flex-wrap:wrap"><button class="btn" onclick="closeModal();startExam()">${ic('pen',16)} MCQ পরীক্ষা দিন...</button><button class="btn blue" onclick="closeModal();S.view='mcqans';render()">${ic('eyeq',16)} MCQ উত্তর দেখুন...</button></div>`,{});
+}
+function pickSub(s){S.sub=s;render();setTimeout(()=>{const c=$('#content');c&&c.scrollIntoView({behavior:'smooth',block:'start'})},50)}
+
+/* ---- CQ / SQ ---- */
+function ansBlock(id,text){return `<div class="abtn"><button id="b-${id}" onclick="toggleAns('${id}')">উত্তর</button></div><div class="ans" id="a-${id}"><div><div class="ansin">${paras(text)}</div></div></div>`}
+function toggleAns(id){
+ const el=$('#a-'+id),was=el.classList.contains('open');
+ document.querySelectorAll('.ans.open').forEach(a=>{a.classList.remove('open');const b=$('#b-'+a.id.slice(2));if(b){b.classList.remove('open');b.textContent='উত্তর'}});
+ if(!was){el.classList.add('open');const b=$('#b-'+id);b.classList.add('open');b.textContent='বন্ধ করো'}
+}
+function cqHTML(){
+ return `<div class="secH">সৃজনশীল প্রশ্ন (CQ)</div>`+CQ.map((c,i)=>{
+  const stim=c.table?`<div class="tbl"><div class="th">ক</div><div class="th">খ</div><div class="td">${c.table[0]}</div><div class="td">${c.table[1]}</div></div>`:`<div class="stim">${c.stim}</div>`;
+  return `<article class="card" style="animation-delay:${i*.05}s"><div class="sh"><span class="num">${bn(i+1)}</span><h3>সৃজনশীল প্রশ্ন</h3></div>${stim}
+  ${c.parts.map((p,j)=>`<div class="qa"><div class="qr"><span class="num sm">${BNL[j]}</span><div class="q">${p[0]}</div><span class="mk">${bn(p[1])}</span></div>${ansBlock(`c${i}_${j}`,p[2])}</div>`).join('')}</article>`;
+ }).join('');
+}
+function sqHTML(){
+ return `<div class="secH">সংক্ষেপে উত্তর দাও (যেকোনো ১০টি)</div><article class="card">`+SQ.map((s,i)=>`<div class="qa" style="${i===0?'border-top:0;padding-top:0':''}"><div class="qr"><span class="num sm">${BNL[i]}</span><div class="q">${s[0]}</div></div>${ansBlock('s'+i,s[1])}</div>`).join('')+`</article>`;
+}
+
+/* ---- MCQ ---- */
+function mcqCard(i,mode,sel){
+ const m=MCQ[i],n=i+1,layout=LISTQ.has(n)?'list':'grid';
+ const opts=m[1].map((t,k)=>{
+  let cls='',sym='',tag='div',attr='';
+  if(mode==='ans'){if(k===m[2]){cls='good';sym='<span class="sym">✓</span>'}}
+  else if(mode==='exam'){tag='button';attr=`onclick="selOpt(${i},${k})"`;if(E&&E.ans[i]===k)cls='sel'}
+  else if(mode==='review'){if(k===m[2]){cls='good';sym='<span class="sym">✓</span>'}else if(k===sel){cls='bad';sym='<span class="sym">✗</span>'}}
+  return `<${tag} class="opt ${cls}" ${attr}><span class="ol">${BNL[k]}</span><span class="ot">${t}</span>${sym}</${tag}>`;
+ }).join('');
+ const bad=mode==='review'&&sel!==m[2]?'cardbad':'';
+ return `<article class="card mcard ${bad}" id="mq${i}" style="animation-delay:${Math.min(i,8)*.04}s"><div class="mq"><span class="num">${bn(n)}</span><div class="qt">${m[0].split('\n').join('<br>')}</div></div><div class="opts ${layout}">${opts}</div></article>`;
+}
+function mcqList(mode,answers){
+ let h='';
+ for(let i=0;i<MCQ.length;i++){
+  if(GROUPS[i]){const g=GROUPS[i];h+=`<div class="stim ${g.cls}" style="margin-top:22px"><div style="font-weight:700;margin-bottom:10px">${g.head}</div>${g.html}</div>`}
+  h+=mcqCard(i,mode,answers?answers[i]:-1);
+ }
+ return h;
+}
+function mcqAnsHTML(){return `<div class="wrap page">${topbar(homeBtn())}<div class="secH">MCQ — সঠিক উত্তরসহ</div>${mcqList('ans')}</div>`}
+
+/* ============ EXAM ============ */
+function loaderHTML(){
+ return `<div class="loader page"><div><div class="papers"><div class="paper"><i></i><i></i><i></i><i></i></div><div class="paper"><i></i><i></i><i></i><i></i></div><div class="paper"><i></i><i></i><i></i><i></i></div></div>
+ <h2>Exam Paper রেডি করা হচ্ছে...</h2><div class="pbox"><div class="pfill" id="pf"></div><div class="shine"></div><span id="pp">০%</span></div></div></div>`;
+}
+function startExam(){
+ S.view='exam';clearInterval(timer);cancelAnimationFrame(raf);closeModal();
+ $('#app').innerHTML=loaderHTML();window.scrollTo({top:0});
+ const t0=performance.now(),D=2000;
+ const step=now=>{
+  if(S.view!=='exam')return;
+  const p=Math.min(1,(now-t0)/D),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2,pct=Math.round(e*100);
+  const f=$('#pf'),t=$('#pp');if(f)f.style.width=pct+'%';if(t)t.textContent=bn(pct)+'%';
+  if(p<1)raf=requestAnimationFrame(step);else setTimeout(()=>{if(S.view!=='exam')return;E={ans:Array(MCQ.length).fill(-1),start:Date.now()};examRender();timer=setInterval(tick,500)},250);
+ };
+ raf=requestAnimationFrame(step);
+}
+const elapsed=()=>Math.floor((Date.now()-E.start)/1000);
+function tick(){if(!E)return;const t=fmtClock(elapsed());const c=$('#clk');if(c)c.textContent=t;const m=$('#mt');if(m)m.textContent=t}
+function examRender(){
+ $('#app').innerHTML=`<div class="ebar"><div class="who">${av(S.user,'38px')}${S.user.bn}</div><div style="display:flex;align-items:center;gap:10px"><div class="clock">${ic('clock',20)}<span id="clk">${fmtClock(elapsed())}</span></div>${icb('x',C.out,'leaveExam()','পরীক্ষা ছাড়ো','sm')}</div></div>
+ <div class="wrap exwrap page">${mcqList('exam')}</div><button class="btn fab" onclick="openSubmit()">${ic('check',18)} জমা দিন...</button>`;
+ window.scrollTo({top:0});
+}
+function selOpt(i,k){
+ E.ans[i]=k;
+ document.querySelectorAll(`#mq${i} .opt`).forEach((b,j)=>b.classList.toggle('sel',j===k));
+ $('#mq'+i).classList.remove('miss');
+}
+function leaveExam(){
+ openModal(`<h2>পরীক্ষা ছেড়ে যাবে?</h2><p style="color:var(--mu);margin:0 0 4px">এখন বের হলে এই পরীক্ষার ফলাফল সেভ হবে না।</p><div class="btns"><button class="btn ghost" onclick="closeModal()">না, চালিয়ে যাই</button><button class="btn red" onclick="closeModal();goHome()">হ্যাঁ, বের হই</button></div>`,{lock:true});
+}
+function openSubmit(){
+ const done=E.ans.filter(x=>x>=0).length,left=MCQ.length-done;
+ openModal(`${av(S.user,'76px')}<h3>${S.user.bn}</h3>
+ <div class="tbig"><span id="mt">${fmtClock(elapsed())}</span><small>সময় নিয়েছ</small></div>
+ <div class="chips"><span class="cg">দাগিয়েছ ${bn(done)}</span><span class="cr">বাকি ${bn(left)}</span></div>
+ <div class="btns">${left?`<button class="btn yel sm" onclick="finishMissing()">${ic('list',15)} MCQ সম্পূর্ণ করুন...</button>`:`<button class="btn ghost sm" onclick="closeModal()">${ic('back',15)} Go Back...</button>`}<button class="btn sm" onclick="submitExam()">${ic('check',15)} জমা দিন...</button></div>`,{wide:true,lock:true});
+}
+function finishMissing(){
+ closeModal();let first=-1;
+ E.ans.forEach((a,i)=>{if(a<0){$('#mq'+i).classList.add('miss');if(first<0)first=i}});
+ if(first>=0)$('#mq'+first).scrollIntoView({behavior:'smooth',block:'center'});
+}
+function calc(ans){const c=ans.filter((a,i)=>a===MCQ[i][2]).length,a=ans.filter(x=>x>=0).length;return{correct:c,wrong:a-c,answered:a,unans:MCQ.length-a}}
+function submitExam(){
+ const dur=elapsed(),r=calc(E.ans),ts=Date.now();
+ const rec={id:ts,ts,dur,ans:E.ans.slice(),...r};
+ DB.hist[S.user.id].push(rec);save('hist',S.user.id);
+ clearInterval(timer);E=null;closeModal();
+ R={rec,uid:S.user.id,fresh:true};S.view='result';render();
+}
+
+/* ============ RESULT ============ */
+function resultHTML(){
+ const {rec,uid,fresh}=R,u=U(uid),no=DB.hist[uid].findIndex(x=>x.id===rec.id)+1;
+ const left=fresh?icb('back',C.back,'goHome()','হোমে ফিরে যান')+`<button class="chip" style="--c:${C.retake}" onclick="startExam()">${ic('retake',16)} পুনরায় পরীক্ষা দিন</button>`
+  :icb('back',C.back,"S.view='hist';render()",'পেছনে যান')+homeBtn();
+ const del=(!fresh&&S.user.admin)?icb('del',C.del,`askDel('${uid}',${rec.id})`,'এই হিস্টোরি ডিলিট করো'):'';
+ return `<div class="wrap page"><div class="urow">${av(u,'84px')}<span>${u.bn}${fresh?'':` • পরীক্ষা #${bn(no)}`}</span></div>
+ <div class="top"><div class="tl">${left}</div><div class="tr">${del}</div></div>
+ <div class="scoreBox"><div><b>${bn(rec.correct)}<small> / ${bn(MCQ.length)}</small></b><span>প্রাপ্ত নম্বর</span></div></div>
+ <div class="stats"><div class="stat g"><b>${bn(rec.correct)}</b><span>সঠিক</span></div><div class="stat r"><b>${bn(rec.wrong)}</b><span>ভুল</span></div><div class="stat"><b>${bn(rec.answered)}</b><span>দাগিয়েছ</span></div><div class="stat"><b>${bn(rec.unans)}</b><span>দাগাওনি</span></div>
+ <div class="stat full"><b>${fmtDur(rec.dur)}</b><span>সময় নিয়েছ</span></div>
+ <div class="stat"><b style="font-size:16px">${fmtDate(rec.ts)}</b><span>তারিখ</span></div><div class="stat"><b style="font-size:16px">${fmtDay(rec.ts)}, ${fmtTime(rec.ts)}</b><span>বার ও সময়</span></div></div>
+ <div class="vr"><button class="btn red lg" onclick="setRev('wrong')">${ic('x',18)} ভুলগুলো দেখুন...</button><div class="two"><button class="btn ghost sm" onclick="setRev('all')">${ic('list',15)} সবগুলো দেখুন...</button><button class="btn ghost sm" onclick="setRev('right')">${ic('check',15)} সঠিকগুলো দেখুন...</button></div></div>
+ <div id="rev"></div></div>`;
+}
+function setRev(f){
+ const a=R.rec.ans;let h='';
+ for(let i=0;i<MCQ.length;i++){
+  const ok=a[i]===MCQ[i][2];
+  if(f==='wrong'&&ok)continue;if(f==='right'&&!ok)continue;
+  h+=mcqCard(i,'review',a[i]);
+ }
+ $('#rev').innerHTML=h||`<div class="empty">দেখানোর মতো কিছু নেই 🎉</div>`;
+ $('#rev').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ============ LEADERBOARD ============ */
+function best(uid){const l=DB.hist[uid];if(!l.length)return null;return l.reduce((b,x)=>(!b||x.correct>b.correct||(x.correct===b.correct&&x.dur<b.dur))?x:b,null)}
+function latest(uid){const l=DB.hist[uid];if(!l.length)return null;return l.reduce((a,x)=>x.ts>a.ts?x:a,l[0])}
+function lbHTML(){
+ const rows=USERS.map(u=>({u,b:latest(u.id),n:DB.hist[u.id].length})).sort((a,b)=>(b.b?b.b.correct:-1)-(a.b?a.b.correct:-1)||(a.b&&b.b?a.b.dur-b.b.dur:0));
+ const medals=['🥇','🥈','🥉'];
+ return `<div class="wrap page">${topbar(homeBtn())}<div class="secH" style="text-align:center">লিডারবোর্ড</div>
+ <div class="cols">${rows.map((r,i)=>`<div class="col" style="--ring:${DB.acc[r.u.id]};animation-delay:${i*.1}s" onclick="openHist('${r.u.id}')"><span class="rk">${medals[i]}</span>${av(r.u,'clamp(64px,18vw,96px)')}<div class="nm">${r.u.bn}</div><div class="ex">${bn(r.n)} টি Exam</div>
+ ${r.b?`<div class="sc"><span class="g">${bn(r.b.correct)}</span><span class="r">${bn(MCQ.length)}</span></div><div class="sclab">সর্বশেষ পরীক্ষা</div>`:`<div class="sclab">কোনো পরীক্ষা নেই</div>`}</div>`).join('')}</div>
+ <p style="text-align:center;color:var(--mu);font-size:14.5px;margin-top:18px">কারও কার্ডে ক্লিক করলে তার সব পরীক্ষার হিস্টোরি দেখতে পারবে</p></div>`;
+}
+function openHist(uid){HU=uid;S.view='hist';render()}
+function histHTML(){
+ const u=U(HU),l=DB.hist[HU];
+ return `<div class="wrap page">${topbar(icb('back',C.back,"S.view='lb';render()",'লিডারবোর্ড')+homeBtn())}
+ <div class="rhead">${av(u,'96px')}<h2>${u.bn}</h2><div style="color:var(--acc);font-weight:700;filter:brightness(.9)">${bn(l.length)} টি Exam</div></div>
+ ${l.length?l.slice().reverse().map((x,k)=>{const no=l.length-k;return `<button class="hbtn" style="animation-delay:${Math.min(k,10)*.04}s" onclick="openRec('${HU}',${x.id})"><span class="num">${bn(no)}</span><span class="info"><b>${fmtDate(x.ts)} • ${fmtDay(x.ts)}</b>${fmtTime(x.ts)} • ${fmtDur(x.dur)}</span><span class="sc"><span class="g">${bn(x.correct)}</span><span class="r">${bn(MCQ.length)}</span></span></button>`}).join(''):`<div class="empty">এখনো কোনো পরীক্ষা দেয়নি।</div>`}</div>`;
+}
+function openRec(uid,id){const rec=DB.hist[uid].find(x=>x.id===id);if(!rec)return;R={rec,uid,fresh:false};S.view='result';render()}
+
+/* ============ SETTINGS (admin) ============ */
+function avRow2(cur,fn){return `<div class="avrow">${USERS.map(x=>`<button class="avb ${cur===x.id?'on':''}" style="--acc:${DB.acc[x.id]}" onclick="${fn}('${x.id}')">${av(x,'62px')}</button>`).join('')}</div>`}
+function settingsHTML(anim){
+ const u=U(SETU),c=PEND[SETU]||DB.acc[SETU],dirty=settingsDirty(),tm=PENDT||DB.theme,l=DB.hist[SETH];
+ return `<div class="wrap ${anim?'page':''}">${topbar(icb('back',C.back,'goHome()','ফিরে যান'))}
+ <div class="sp"><h1>সেটিংস</h1>
+ <div class="scard"><h3>থিম মোড</h3><div class="tgl"><button class="${tm==='light'?'on':''}" onclick="setTheme('light')">${ic('sun',18)} লাইট</button><button class="${tm==='dark'?'on':''}" onclick="setTheme('dark')">${ic('moon',18)} ডার্ক</button></div></div>
+ <div class="scard"><h3>ইউজারের অ্যাকসেন্ট কালার</h3>${avRow2(SETU,'setU')}
+  <div class="sw">${PALETTE.map(p=>`<button title="${p[0]}" class="${c===p[1]?'on':''}" style="background:${p[1]}" onclick="pickC('${p[1]}')"></button>`).join('')}</div>
+  <div class="prev" style="--acc:${c};--ink:${inkOf(c)}"><div class="pl">লাইভ প্রিভিউ</div>
+   <div class="pr">${av(u,'54px',c)}<span>${u.bn}</span></div>
+   <div class="pq"><span class="num">১</span><span>নমুনা প্রশ্ন কেমন দেখাবে?</span></div>
+   <div class="opt sel" style="margin-bottom:12px"><span class="ol">ক</span><span class="ot">নির্বাচিত অপশন</span></div>
+   <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn sm">${ic('check',14)} বাটন</button><button class="btn sm ghost" style="border-color:var(--acc)">সেকেন্ডারি</button></div></div>
+  </div>
+ <div class="scard"><h3>লিডারবোর্ড হিস্টোরি ম্যানেজ</h3>${avRow2(SETH,'setH')}
+  <div style="text-align:center;color:var(--acc);font-weight:700;margin-bottom:12px;filter:brightness(.9)">${U(SETH).bn} — ${bn(l.length)} টি Exam</div>
+  ${l.length?l.slice().reverse().map((x,k)=>`<div class="drow"><span class="num sm">${bn(l.length-k)}</span><div class="di"><b>${fmtDate(x.ts)} • ${fmtDay(x.ts)}</b><small>${fmtTime(x.ts)} • ${bn(x.correct)}/${bn(MCQ.length)} • ${fmtDur(x.dur)}</small></div>${icb('view',C.view,`openRec('${SETH}',${x.id})`,'বিস্তারিত','sm')}${icb('del',C.del,`askDel('${SETH}',${x.id})`,'ডিলিট','sm')}</div>`).join(''):`<div class="empty">কোনো হিস্টোরি নেই</div>`}</div>
+ <div class="savebar">${cloudOn()?'':'<div class="nocloud">⚠ Firebase সেট করা নেই — পরিবর্তন শুধু এই ডিভাইসে থাকবে</div>'}<button class="btn lg" onclick="saveAll()">${ic('check',18)} সেভ করুন${dirty?' •':''}</button></div>
+ </div></div>`;
+}
+function refreshSettings(){const y=window.scrollY;$('#app').innerHTML=settingsHTML(false);window.scrollTo({top:y})}
+function settingsDirty(){return (PENDT&&PENDT!==DB.theme)||USERS.some(u=>PEND[u.id]&&PEND[u.id]!==DB.acc[u.id])}
+function setTheme(t){PENDT=t;document.documentElement.dataset.theme=t;refreshSettings()}
+function setU(id){SETU=id;refreshSettings()}
+function setH(id){SETH=id;refreshSettings()}
+function pickC(c){PEND[SETU]=c;refreshSettings()}
+function saveAll(){
+ if(!settingsDirty()){toast('নতুন কোনো পরিবর্তন নেই');return}
+ if(PENDT)DB.theme=PENDT;
+ USERS.forEach(u=>{if(PEND[u.id])DB.acc[u.id]=PEND[u.id]});
+ PEND={};PENDT=null;save('set');applyTheme();
+ toast(cloudOn()?'সেভ হয়েছে ✓ সবার জন্য প্রযোজ্য':'সেভ হয়েছে (শুধু এই ডিভাইসে)');refreshSettings();
+}
+function askDel(uid,id){
+ const l=DB.hist[uid],no=l.findIndex(x=>x.id===id)+1;
+ $('#modal-root').insertAdjacentHTML('beforeend',`<div class="backdrop" id="cf" style="z-index:5"><div class="pop-box"><h2>ডিলিট করবে?</h2><p style="color:var(--mu);margin:0">${U(uid).bn}-এর পরীক্ষা #${bn(no)} মুছে গেলে আর ফেরত পাওয়া যাবে না।</p><div class="btns"><button class="btn ghost sm" onclick="$('#cf').remove()">না</button><button class="btn red sm" onclick="doDel('${uid}',${id})">${ic('del',15)} হ্যাঁ, ডিলিট</button></div></div></div>`);
+}
+function doDel(uid,id){
+ DB.hist[uid]=DB.hist[uid].filter(x=>x.id!==id);save('hist',uid);
+ $('#cf')&&$('#cf').remove();toast('হিস্টোরি ডিলিট হয়েছে');
+ if(S.view==='result'){if(DB.hist[uid].length){HU=uid;S.view='hist'}else S.view='lb';render()}
+ else if(S.view==='settings')refreshSettings();
+ else render();
+}
+
+applyTheme();render();
+</script>
+</body>
+</html>
